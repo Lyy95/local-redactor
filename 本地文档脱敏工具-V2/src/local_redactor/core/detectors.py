@@ -203,21 +203,45 @@ def _luhn_valid(value: str) -> bool:
 def _account_metadata(match: re.Match[str]) -> dict[str, Any]:
     value = match.group("value")
     context = match.group(0)
+    digits = re.sub(r"\D", "", value)
     kind = "platform"
     if re.search(r"银行卡|卡号|对公|收款|开户", context):
         kind = "bank"
-    return {
+    metadata = {
         "account_kind": kind,
         "luhn_valid": _luhn_valid(value),
         "label": match.group("label"),
     }
+    if digits.startswith("62") and 16 <= len(digits) <= 19:
+        metadata["unionpay_bin"] = True
+    return metadata
 
 
 def _bank_card_metadata(match: re.Match[str]) -> dict[str, Any]:
-    return {
+    digits = re.sub(r"\D", "", match.group(0))
+    metadata = {
         "account_kind": "bank",
         "luhn_valid": True,
         "label": "银行卡号",
+    }
+    if digits.startswith("62"):
+        metadata["unionpay_bin"] = True
+    return metadata
+
+
+def _unionpay_bin_valid(match: re.Match[str]) -> bool:
+    """Accept China UnionPay BIN 62 cards even when the test PAN fails Luhn."""
+    digits = re.sub(r"\D", "", match.group(0))
+    return digits.startswith("62") and 16 <= len(digits) <= 19
+
+
+def _unionpay_bin_metadata(match: re.Match[str]) -> dict[str, Any]:
+    digits = re.sub(r"\D", "", match.group(0))
+    return {
+        "account_kind": "bank",
+        "luhn_valid": _luhn_valid(digits),
+        "unionpay_bin": True,
+        "label": "银联卡号",
     }
 
 
@@ -404,6 +428,16 @@ class StructuredDetector:
                 0.99,
                 validator=lambda match: _luhn_valid(match.group(0)),
                 metadata_factory=_bank_card_metadata,
+                suppress_if_overlapped=True,
+            ),
+            _Rule(
+                "bank-card-unionpay-bin",
+                Category.ACCOUNT,
+                re.compile(r"(?<!\d)62(?:\d[\s-]?){14,17}\d(?!\d)"),
+                TransformMethod.SIMULATE,
+                0.85,
+                validator=_unionpay_bin_valid,
+                metadata_factory=_unionpay_bin_metadata,
                 suppress_if_overlapped=True,
             ),
             _Rule(
