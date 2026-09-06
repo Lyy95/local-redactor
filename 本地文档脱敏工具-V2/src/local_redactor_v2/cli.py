@@ -148,12 +148,16 @@ def _remove_all_images(controller) -> None:
     bundle = controller._bundle
     if document is None:
         return
+    count = 0
     for image in document.images:
         image.disposition = ImageDisposition.REMOVE
         image.regions.clear()
+        count += 1
     if bundle is not None:
         for review in bundle.images:
             review.disposition = ImageDisposition.REMOVE
+    if count:
+        print(f"命令行已删除图片 {count} 张", file=sys.stderr)
 
 
 def _close_cli_review(controller, bundle, args) -> None:
