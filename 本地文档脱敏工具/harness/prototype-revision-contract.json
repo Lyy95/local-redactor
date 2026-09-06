@@ -1,0 +1,188 @@
+{
+  "version": 1,
+  "revision": "ux-rule-library-2026-07-29",
+  "status": "verified-2026-08-04",
+  "source": "docs/prototype/06-UX_AND_RULE_LIBRARY_REVISION.md",
+  "workflowSteps": [
+    "选文件",
+    "自动检查",
+    "确认处理",
+    "生成文件"
+  ],
+  "requiredUserFacingTerms": [
+    "本机离线",
+    "规则库",
+    "采用建议",
+    "采用全部普通建议",
+    "修改",
+    "保留原文",
+    "删除",
+    "必须替换",
+    "以后都这样处理",
+    "导入词库",
+    "技术检查已完成",
+    "仍需按单位制度确认是否可外发"
+  ],
+  "forbiddenMainUiTerms": [
+    "一致别名",
+    "结构模拟",
+    "降低精度",
+    "区间化",
+    "统一平移",
+    "比例变换",
+    "像素处理",
+    "转为可见附注",
+    "确认并应用策略"
+  ],
+  "batchConfirmation": {
+    "label": "采用全部普通建议",
+    "includes": [
+      "ordinary-text-and-cell-suggestions",
+      "deterministic-fixed-replacements",
+      "deterministic-mandatory-standards"
+    ],
+    "excludes": [
+      "images-and-qr",
+      "low-confidence-unknown-text",
+      "combination-risk",
+      "attachments",
+      "embedded-or-unknown-objects"
+    ]
+  },
+  "persistentRuleLibrary": {
+    "types": [
+      "fixed-replacement",
+      "mandatory-standard"
+    ],
+    "manualCrud": true,
+    "importFormats": [
+      "xlsx",
+      "csv"
+    ],
+    "storage": "Windows DPAPI current-user encrypted rules.dat",
+    "failClosedOnLoadError": true,
+    "freezeSnapshotPerTask": true,
+    "noPlaintextFallback": true,
+    "excludedFrom": [
+      "AI analysis copy",
+      "HTML report rule details",
+      "application logs",
+      "task output directories",
+      "file properties"
+    ]
+  },
+  "mandatoryRulePolicy": {
+    "toolDeterminesLegalClassification": false,
+    "keepOriginalAllowed": false,
+    "allowedResults": [
+      "fixed-code",
+      "masked-code",
+      "sequence-code",
+      "remove"
+    ],
+    "examples": [
+      {
+        "source": "公安",
+        "result": "GA"
+      },
+      {
+        "source": "网警",
+        "result": "WJ"
+      },
+      {
+        "source": "530网",
+        "result": "5**网"
+      }
+    ],
+    "opaqueUserCodes": [
+      "jz",
+      "qb"
+    ]
+  },
+  "journeys": [
+    {
+      "id": "simplified-first-screen",
+      "steps": [
+        "Launch at 1280x720",
+        "Inspect the initial screen"
+      ],
+      "expected": [
+        "One primary task and one primary action are visible",
+        "Long coverage and technical explanations are collapsed"
+      ]
+    },
+    {
+      "id": "single-item-review-feedback",
+      "steps": [
+        "Open an ordinary pending text item",
+        "Choose 采用建议"
+      ],
+      "expected": [
+        "The item visibly completes",
+        "The pending count decreases",
+        "A success message appears",
+        "The next pending item is selected"
+      ]
+    },
+    {
+      "id": "safe-batch-review",
+      "steps": [
+        "Open a mixed task containing ordinary text, an image, combination risk and an embedded object",
+        "Choose 采用全部普通建议"
+      ],
+      "expected": [
+        "Only ordinary and deterministic rule findings complete",
+        "The image, combination risk and embedded object remain pending",
+        "Export remains blocked"
+      ]
+    },
+    {
+      "id": "persistent-fixed-rule",
+      "steps": [
+        "Add 公安 to GA",
+        "Restart the application",
+        "Scan a new fictional Office document containing the term"
+      ],
+      "expected": [
+        "The rule remains available",
+        "The result is GA across text, cells and OCR",
+        "The item cannot be kept as original",
+        "The task mapping table records the applied rule source"
+      ]
+    },
+    {
+      "id": "mandatory-mask-standard",
+      "steps": [
+        "Add a mandatory standard with example 530网 to 5**网",
+        "Scan a fictional document containing the pattern",
+        "Attempt to keep the original"
+      ],
+      "expected": [
+        "The transformed result is 5**网",
+        "Keeping the original is unavailable",
+        "The export scan rejects any residual original"
+      ]
+    },
+    {
+      "id": "rule-library-fail-closed",
+      "steps": [
+        "Tamper with the encrypted rule store",
+        "Start a new scan"
+      ],
+      "expected": [
+        "The scan is blocked with a sanitized recovery message",
+        "The application does not silently continue with an empty library"
+      ]
+    }
+  ],
+  "protectedSecurityConstraints": [
+    "source-file-read-only",
+    "offline-no-network",
+    "human-decision-for-every-image",
+    "fail-closed-on-unknown-object",
+    "clean-container-rebuild",
+    "rescan-actual-output-bytes",
+    "encrypted-mapping-separated-from-ai-delivery",
+    "no-declassification-or-upload-safety-claim"
+  ]
+}

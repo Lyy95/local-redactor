@@ -1,0 +1,46 @@
+# Local Git metadata backup from the former nested repository
+**/.git.nested-backup/
+
+# Python environments and caches
+**/.venv/
+**/venv/
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/.coverage
+**/htmlcov/
+**/*.egg-info/
+
+# JavaScript dependencies and generated output
+**/node_modules/
+**/dist/
+**/build/
+
+# Test and runtime temporary data
+/t/
+**/tmp/
+**/task-temp/
+**/runtime-cache/
+**/downloads/
+**/models/
+**/AI交付/
+**/本地保管/
+**/真实资料/
+**/脱敏结果_*/
+
+# Local artifacts
+**/*.log
+**/*.tmp
+**/*.bak
+**/*.redmap
+**/*.spec
+**/*.zip
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

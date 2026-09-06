@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "projectName": "本地文档脱敏工具-V2",
+  "moduleName": "Windows 本地桌面应用重构第一阶段",
+  "phase": "implementation",
+  "baselineStatus": "step3-repaired-package-built-awaiting-A-D-2026-09-01",
+  "runtime": {
+    "kind": "native-windows-desktop",
+    "offlineRequired": true,
+    "delivery": ["portable-zip", "windows-exe"],
+    "browserIsPrimaryRuntime": false
+  },
+  "offlineComponents": {
+    "sourcePolicy": "reuse-local-or-old-version-only; no-network-download",
+    "packages": ["rapidocr", "onnxruntime", "spacy", "zh-core-web-sm", "opencv-python"],
+    "requiredOcrModels": ["PP-OCRv6_det_small.onnx", "PP-OCRv6_rec_small.onnx", "ch_ppocr_mobile_v2.0_cls_mobile.onnx"],
+    "modelManifest": "build/generated/model-manifest.json",
+    "expectedAssetCount": 34,
+    "frozenStartupPolicy": "fail-closed-on-missing-or-hash-mismatch"
+  },
+  "designSource": {
+    "path": "../本地文档脱敏工具-UX原型",
+    "authority": "唯一界面设计源",
+    "alignment": "exact",
+    "allowedDifferences": ["操作系统窗口边框", "原生文件选择器", "EXE/便携包启动入口"]
+  },
+  "baselineDocuments": [
+    "AGENTS.md",
+    "DESIGN.md",
+    "docs/prototype/00-MODULE_BRIEF.md",
+    "docs/prototype/01-REQUIREMENTS.md",
+    "docs/prototype/02-DECISIONS.md",
+    "docs/prototype/03-FIELD_MATRIX.md",
+    "docs/prototype/04-STATE_MATRIX.md",
+    "docs/prototype/05-ACCEPTANCE.md",
+    "docs/prototype/06-FUNCTION_LIST.md"
+  ],
+  "requiredFiles": [
+    "AGENTS.md",
+    "DESIGN.md",
+    "harness/progress.md",
+    "harness/prototype-contract.json",
+    "ui/dist/client/index.html",
+    "src/local_redactor_v2/app.py",
+    "src/local_redactor_v2/host.py",
+    "src/local_redactor_v2/bridge.py",
+    "ui/src/desktopBridge.js",
+    "scripts/generate_model_manifest.py",
+    "scripts/verify_release.py",
+    "tests/test_docx_loop.py",
+    "harness/protected-baseline.json"
+  ],
+  "sourceRoots": ["src", "tests", "ui/src"],
+  "allowedChangePaths": ["src/**", "ui/**", "tests/**", "docs/**", "harness/**", "scripts/**", "AGENTS.md", "DESIGN.md", "README.md", "pyproject.toml"],
+  "protectedPaths": [
+    "../本地文档脱敏工具/src/**",
+    "../本地文档脱敏工具/tests/**",
+    "../本地文档脱敏工具/scripts/**",
+    "../本地文档脱敏工具/docs/**",
+    "../本地文档脱敏工具/harness/**",
+    "../本地文档脱敏工具/AGENTS.md",
+    "../本地文档脱敏工具/DESIGN.md",
+    "../本地文档脱敏工具/pyproject.toml",
+    "../本地文档脱敏工具-UX原型/src/**",
+    "../本地文档脱敏工具-UX原型/public/**",
+    "../本地文档脱敏工具-UX原型/tests/**",
+    "../本地文档脱敏工具-UX原型/docs/**",
+    "../本地文档脱敏工具-UX原型/harness/**",
+    "../本地文档脱敏工具-UX原型/AGENTS.md",
+    "../本地文档脱敏工具-UX原型/DESIGN.md",
+    "../本地文档脱敏工具-UX原型/package.json",
+    "../本地文档脱敏工具-UX原型/package-lock.json",
+    "../本地文档脱敏工具-UX原型/vite.config.mjs"
+  ],
+  "requiredTerms": ["本机离线", "原文件只读", "AI 交付", "本地保管", "严禁上传", "一键采用全部建议并继续"],
+  "forbiddenTerms": ["可安全上传", "绝对安全", "100%安全", "已脱密", "云端处理"],
+  "commands": {
+    "uiBuild": "npm.cmd --prefix ui run build",
+    "shellSelfTest": "python -c \"import sys; sys.path.insert(0,'src'); from local_redactor_v2.app import main; raise SystemExit(main(['--self-test']))\"",
+    "unitTests": "python -m pytest",
+    "staticCheck": "python -m ruff check src tests",
+    "typeCheck": "python -m mypy src",
+    "step3VisualHarness": "python scripts/verify_step3_preview.py",
+    "package": "python scripts/build_windows.py",
+    "verifyRelease": "python scripts/verify_release.py"
+    ,"verifyHarness": "python scripts/verify_harness.py"
+  },
+  "bridgeContract": {
+    "methods": ["get_runtime_info", "choose_file", "create_task", "start_scan", "get_task_snapshot", "resolve_finding", "add_manual_finding", "preview_task", "export_task", "list_history", "open_history"],
+    "errorShape": ["code", "message", "retryable", "returnAction"]
+  },
+  "browserJourneys": [
+    {"id":"ui-shell-regression","name":"本地 UI 壳回归","steps":["加载构建页面","展开和收起侧栏","进入新建任务","返回当前任务"],"expected":["无脚本错误","页面结构与原型一致","状态不丢失"]}
+  ],
+  "visualAlignmentChecks": [
+    "页面结构与原型一致",
+    "左上角品牌图标在桌面壳中正常加载",
+    "收起状态的侧栏展开按钮位于导航顶部",
+    "侧栏宽度、展开收起和工作区推移一致",
+    "文案、按钮、状态反馈和返回路径一致",
+    "第 3 步建议卡位置、右侧待办和四个逐项操作一致",
+    "第 4 步输出卡片、目录名称和严禁上传提示一致"
+  ],
+  "desktopJourneys": [
+    {"id":"cold-start-step-1","name":"正式 EXE 冷启动","steps":["正常启动打包 EXE","等待主窗口可操作"],"expected":["工作区停在第 1 步","无虚构当前任务","不自动进入第 3 步"]},
+    {"id":"native-docx-picker","name":"第 1 步真实选文件","steps":["点击选择文件","取消一次","再次选择有效 DOCX"],"expected":["Windows 原生 DOCX 选择器可用","取消不创建任务","文件摘要显示真实文件名"]},
+    {"id":"offline-start","name":"断网启动","steps":["断开网络","启动便携包/EXE"],"expected":["进入主界面","无网络请求","显示本机离线"]},
+    {"id":"single-docx-loop","name":"单文件 DOCX 最小闭环","steps":["选择测试 DOCX","自动检查","复核命中项","生成结果","查看历史"],"expected":["第 4 步可进入","三类结果分离","历史状态正确"]},
+    {"id":"back-preserves-state","name":"返回保持状态","steps":["完成一个复核决定","返回上一步","再次进入复核"],"expected":["决定和待处理数保持"]},
+    {"id":"manual-finding","name":"手工添加脱敏项","steps":["在复核页添加内容","处理新增项"],"expected":["右侧列表和待处理数同步"]},
+    {"id":"history-survives-restart","name":"历史跨进程保留","steps":["完成一个真实 DOCX 任务","关闭 EXE","重新打开同一 EXE","打开任务历史"],"expected":["上次真实历史仍存在","结果可用性一致","无虚构历史"]}
+  ],
+  "hardAcceptanceGates": [
+    {"id":"A","name":"冷启动停在第 1 步","status":"pending","evidence":"源码和构建页 DOM 已修复为第 1 步，待新冻结 EXE 黑盒复验"},
+    {"id":"B","name":"第 1 步原生 DOCX 选择器可用","status":"pending","evidence":"QWebChannel 选文件桥接和注入测试已通过，待新冻结 EXE 原生弹窗复验"},
+    {"id":"C","name":"打包 EXE 真实四步闭环","status":"pending","evidence":"必须从修复后的第 1 步重新黑盒验收"},
+    {"id":"D","name":"历史关闭重开后仍存在","status":"pending","evidence":"启动 list_history 和跨 HistoryStore/桥接实例测试已通过，待新冻结 EXE 跨进程复验"}
+  ],
+  "deployment": {"environment":"none","requiresFinalConfirmation":true,"status":"not-authorized"}
+}

@@ -1,0 +1,2364 @@
+{
+  "passed": false,
+  "checkedAt": "2026-09-01T06:45:49.494430+00:00",
+  "phase": "implementation",
+  "checks": [
+    {
+      "name": "implementation phase confirmed",
+      "passed": true,
+      "detail": "implementation"
+    },
+    {
+      "name": "required file: AGENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: DESIGN.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: harness/progress.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: harness/prototype-contract.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: ui/dist/client/index.html",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: src/local_redactor_v2/app.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: src/local_redactor_v2/host.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: src/local_redactor_v2/bridge.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: ui/src/desktopBridge.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: scripts/generate_model_manifest.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: scripts/verify_release.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: tests/test_docx_loop.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: harness/protected-baseline.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: AGENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: AGENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: DESIGN.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: DESIGN.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: docs/prototype/00-MODULE_BRIEF.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: docs/prototype/00-MODULE_BRIEF.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: docs/prototype/01-REQUIREMENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: docs/prototype/01-REQUIREMENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: docs/prototype/02-DECISIONS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: docs/prototype/02-DECISIONS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: docs/prototype/03-FIELD_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: docs/prototype/03-FIELD_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: docs/prototype/04-STATE_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: docs/prototype/04-STATE_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: docs/prototype/05-ACCEPTANCE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: docs/prototype/05-ACCEPTANCE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: docs/prototype/06-FUNCTION_LIST.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: docs/prototype/06-FUNCTION_LIST.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "command passed: uiBuild",
+      "passed": true,
+      "detail": "> local-redactor-v2-ui@0.1.0 build\n> vite build\n\nvite v6.4.2 building for production...\ntransforming...\n✓ 1815 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/client/index.html                   0.54 kB │ gzip:   0.36 kB\ndist/client/assets/index-BzGiSMOO.css   90.11 kB │ gzip:  16.15 kB\ndist/client/assets/index-BFoTbiJI.js   335.41 kB │ gzip: 100.29 kB\n✓ built in 6.98s"
+    },
+    {
+      "name": "command passed: shellSelfTest",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "command passed: unitTests",
+      "passed": true,
+      "detail": "============================= test session starts =============================\nplatform win32 -- Python 3.13.13, pytest-8.4.2, pluggy-1.6.0\nrootdir: D:\\AI\\GPT��Ŀ\\ͨ��\\�����ĵ���������-V2\nconfigfile: pyproject.toml\ntestpaths: tests\nplugins: anyio-4.14.2\ncollected 8 items\n\ntests\\test_bridge.py ...                                                 [ 37%]\ntests\\test_docx_loop.py ...                                              [ 75%]\ntests\\test_runtime_offline.py ..                                         [100%]\n\n============================= 8 passed in 25.54s =============================="
+    },
+    {
+      "name": "command passed: staticCheck",
+      "passed": true,
+      "detail": "All checks passed!"
+    },
+    {
+      "name": "command passed: typeCheck",
+      "passed": true,
+      "detail": "Success: no issues found in 30 source files"
+    },
+    {
+      "name": "command passed: step3VisualHarness",
+      "passed": true,
+      "detail": "{\"ok\": true, \"viewports\": [{\"width\": 1536, \"height\": 1024, \"step3\": true, \"inlineAnchors\": 7, \"separateRecognitionHeading\": false, \"suggestion\": true, \"rail\": true, \"horizontalOverflow\": false}, {\"width\": 1440, \"height\": 900, \"step3\": true, \"inlineAnchors\": 7, \"separateRecognitionHeading\": false, \"suggestion\": true, \"rail\": true, \"horizontalOverflow\": false}, {\"width\": 1280, \"height\": 720, \"step3\": true, \"inlineAnchors\": 7, \"separateRecognitionHeading\": false, \"suggestion\": true, \"rail\": true, \"horizontalOverflow\": false}]}\n\n[2660:21292:0901/144343.412:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.\n[2660:21292:0901/144343.412:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.\n[2660:21292:0901/144343.568:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.\n[2660:21292:0901/144343.568:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.\n[2660:21292:0901/144343.568:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.\n[2660:21292:0901/144343.568:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization."
+    },
+    {
+      "name": "command passed: package",
+      "passed": false,
+      "detail": "Traceback (most recent call last):\n  File \"D:\\AI\\GPT��Ŀ\\ͨ��\\�����ĵ���������-V2\\scripts\\build_windows.py\", line 145, in <module>\n    print(*build(replace=args.replace), sep=\"\\n\")\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\AI\\GPT��Ŀ\\ͨ��\\�����ĵ���������-V2\\scripts\\build_windows.py\", line 37, in build\n    raise RuntimeError(\"Ŀ���Ѵ��ڣ�ʹ�� --replace �������滻 V2 ������\")\nRuntimeError: Ŀ���Ѵ��ڣ�ʹ�� --replace �������滻 V2 ������"
+    },
+    {
+      "name": "command passed: verifyRelease",
+      "passed": true,
+      "detail": "{\n  \"ok\": true,\n  \"appDir\": \"D:\\\\AI\\\\GPT��Ŀ\\\\ͨ��\\\\�����ĵ���������-V2\\\\dist\\\\�����ĵ���������-V2\",\n  \"archive\": \"D:\\\\AI\\\\GPT��Ŀ\\\\ͨ��\\\\�����ĵ���������-V2\\\\dist\\\\�����ĵ���������-V2-Windows-x64.zip\",\n  \"executableSha256\": \"613183a15321565de92ceaf4b7f317d8fd09f021028e9dce4d1ddb80a1fbf57c\",\n  \"archiveSha256\": \"4fff0b6a91bd4c749a666e875057b7fda74f8bdabad2104141b72d976fb561a6\",\n  \"modelManifestSha256\": \"47d29d3b4d1411d6daded9ffcfa47e429d4e16548fb46a895885d0429234fca8\",\n  \"modelAssetCount\": 34,\n  \"qtWebEngineProcessCount\": 1,\n  \"uiPageCount\": 1\n}"
+    },
+    {
+      "name": "command passed: verifyHarness",
+      "passed": false,
+      "detail": "{\"passed\": false, \"checks\": 56, \"results\": \"D:\\\\AI\\\\GPT��Ŀ\\\\ͨ��\\\\�����ĵ���������-V2\\\\harness\\\\prototype-results.json\"}"
+    },
+    {
+      "name": "source corpus found",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 本机离线",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 原文件只读",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: AI 交付",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 本地保管",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 严禁上传",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 一键采用全部建议并继续",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 可安全上传",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 绝对安全",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 100%安全",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 已脱密",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 云端处理",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "browser journeys configured",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: ui-shell-regression",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: ui-shell-regression",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/AGENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/AGENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/DESIGN.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/DESIGN.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/docs/prototype/00-MODULE_BRIEF.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/docs/prototype/00-MODULE_BRIEF.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/docs/prototype/01-REQUIREMENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/docs/prototype/01-REQUIREMENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/docs/prototype/02-DECISIONS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/docs/prototype/02-DECISIONS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/docs/prototype/03-FIELD_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/docs/prototype/03-FIELD_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/docs/prototype/04-STATE_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/docs/prototype/04-STATE_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/docs/prototype/05-ACCEPTANCE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/docs/prototype/05-ACCEPTANCE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/harness/progress.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/harness/progress.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/harness/protected-baseline.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/harness/protected-baseline.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/harness/prototype-contract.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/harness/prototype-contract.json",
+      "passed": false,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/harness/prototype-results.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/harness/prototype-results.json",
+      "passed": false,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/package-lock.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/package-lock.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/package.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/package.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/public/assets/logo.png",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/public/assets/logo.png",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/src/App.jsx",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/src/App.jsx",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/src/components/NewTaskView.jsx",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/src/components/NewTaskView.jsx",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/src/components/RuleLibraryView.jsx",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/src/components/RuleLibraryView.jsx",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/src/components/TaskFlowView.jsx",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/src/components/TaskFlowView.jsx",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/src/components/new-task.css",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/src/components/new-task.css",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/src/components/rules.css",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/src/components/rules.css",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/src/components/task-flow.css",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/src/components/task-flow.css",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/src/main.jsx",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/src/main.jsx",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/src/prototypeData.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/src/prototypeData.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/src/styles.css",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/src/styles.css",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/tests/sites-worker.test.mjs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/tests/sites-worker.test.mjs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具-UX原型/vite.config.mjs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具-UX原型/vite.config.mjs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/AGENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/AGENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/DESIGN.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/DESIGN.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/BUGFIX_20260807.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/BUGFIX_20260807.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/BUGFIX_20260807_ROUND2.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/BUGFIX_20260807_ROUND2.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/prototype/00-MODULE_BRIEF.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/prototype/00-MODULE_BRIEF.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/prototype/01-REQUIREMENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/prototype/01-REQUIREMENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/prototype/02-DECISIONS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/prototype/02-DECISIONS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/prototype/03-FIELD_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/prototype/03-FIELD_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/prototype/04-STATE_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/prototype/04-STATE_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/prototype/05-ACCEPTANCE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/prototype/05-ACCEPTANCE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/prototype/06-UX_AND_RULE_LIBRARY_REVISION.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/prototype/06-UX_AND_RULE_LIBRARY_REVISION.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/prototype/07-DATA_MASKING_RULEBOOK.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/prototype/07-DATA_MASKING_RULEBOOK.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/prototype/08-ROUND3-CONFIRMATION.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/prototype/08-ROUND3-CONFIRMATION.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/harness/progress.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/harness/progress.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/harness/protected-baseline.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/harness/protected-baseline.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/harness/prototype-contract.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/harness/prototype-contract.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/harness/prototype-results.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/harness/prototype-results.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/harness/prototype-revision-contract.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/harness/prototype-revision-contract.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/pyproject.toml",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/pyproject.toml",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/scripts/__pycache__/build_windows.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/scripts/__pycache__/build_windows.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/scripts/__pycache__/generate_model_manifest.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/scripts/__pycache__/generate_model_manifest.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/scripts/build_windows.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/scripts/build_windows.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/scripts/create_demo_documents.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/scripts/create_demo_documents.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/scripts/create_user_guide.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/scripts/create_user_guide.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/scripts/generate_model_manifest.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/scripts/generate_model_manifest.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/scripts/launcher.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/scripts/launcher.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/scripts/render_ui_qa.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/scripts/render_ui_qa.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/scripts/run_acceptance.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/scripts/run_acceptance.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/scripts/verify_release.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/scripts/verify_release.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor.egg-info/PKG-INFO",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor.egg-info/PKG-INFO",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor.egg-info/SOURCES.txt",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor.egg-info/SOURCES.txt",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor.egg-info/dependency_links.txt",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor.egg-info/dependency_links.txt",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor.egg-info/entry_points.txt",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor.egg-info/entry_points.txt",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor.egg-info/requires.txt",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor.egg-info/requires.txt",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor.egg-info/top_level.txt",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor.egg-info/top_level.txt",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/__init__.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/__init__.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/__pycache__/__init__.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/__pycache__/__init__.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/__pycache__/__init__.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/__pycache__/__init__.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/__pycache__/app.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/__pycache__/app.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/__pycache__/app.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/__pycache__/app.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/__pycache__/builtin_rules.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/__pycache__/builtin_rules.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/__pycache__/builtin_rules.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/__pycache__/builtin_rules.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/__pycache__/history.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/__pycache__/history.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/__pycache__/history.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/__pycache__/history.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/__pycache__/interfaces.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/__pycache__/interfaces.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/__pycache__/interfaces.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/__pycache__/interfaces.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/__pycache__/models.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/__pycache__/models.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/__pycache__/models.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/__pycache__/models.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/__pycache__/rule_library.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/__pycache__/rule_library.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/__pycache__/rule_library.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/__pycache__/rule_library.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/__pycache__/runtime.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/__pycache__/runtime.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/__pycache__/runtime.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/__pycache__/runtime.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/__pycache__/service.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/__pycache__/service.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/__pycache__/service.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/__pycache__/service.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/app.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/app.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/artifacts/__init__.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/artifacts/__init__.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/artifacts/__pycache__/__init__.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/artifacts/__pycache__/__init__.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/artifacts/__pycache__/__init__.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/artifacts/__pycache__/__init__.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/artifacts/__pycache__/encryption.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/artifacts/__pycache__/encryption.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/artifacts/__pycache__/encryption.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/artifacts/__pycache__/encryption.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/artifacts/__pycache__/report.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/artifacts/__pycache__/report.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/artifacts/__pycache__/report.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/artifacts/__pycache__/report.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/artifacts/__pycache__/validation.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/artifacts/__pycache__/validation.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/artifacts/__pycache__/validation.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/artifacts/__pycache__/validation.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/artifacts/__pycache__/writer.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/artifacts/__pycache__/writer.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/artifacts/__pycache__/writer.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/artifacts/__pycache__/writer.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/artifacts/encryption.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/artifacts/encryption.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/artifacts/report.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/artifacts/report.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/artifacts/validation.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/artifacts/validation.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/artifacts/writer.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/artifacts/writer.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/builtin_rules.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/builtin_rules.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/__init__.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/__init__.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/__init__.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/__init__.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/__init__.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/__init__.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/common.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/common.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/common.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/common.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/detectors.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/detectors.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/detectors.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/detectors.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/images.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/images.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/images.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/images.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/risk.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/risk.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/risk.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/risk.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/transforms.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/transforms.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/transforms.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/__pycache__/transforms.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/common.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/common.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/detectors.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/detectors.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/images.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/images.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/risk.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/risk.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/transforms.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/transforms.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/history.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/history.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/interfaces.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/interfaces.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/models.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/models.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/office/__init__.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/office/__init__.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/office/__pycache__/__init__.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/office/__pycache__/__init__.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/office/__pycache__/__init__.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/office/__pycache__/__init__.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/office/__pycache__/common.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/office/__pycache__/common.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/office/__pycache__/common.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/office/__pycache__/common.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/office/__pycache__/docx.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/office/__pycache__/docx.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/office/__pycache__/docx.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/office/__pycache__/docx.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/office/__pycache__/security.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/office/__pycache__/security.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/office/__pycache__/security.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/office/__pycache__/security.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/office/__pycache__/xlsx.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/office/__pycache__/xlsx.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/office/__pycache__/xlsx.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/office/__pycache__/xlsx.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/office/common.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/office/common.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/office/docx.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/office/docx.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/office/security.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/office/security.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/office/xlsx.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/office/xlsx.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/rule_library.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/rule_library.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/runtime.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/runtime.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/service.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/service.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/ui/__init__.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/ui/__init__.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/ui/__pycache__/__init__.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/ui/__pycache__/__init__.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/ui/__pycache__/__init__.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/ui/__pycache__/__init__.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/ui/__pycache__/controller.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/ui/__pycache__/controller.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/ui/__pycache__/controller.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/ui/__pycache__/controller.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/ui/__pycache__/image_canvas.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/ui/__pycache__/image_canvas.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/ui/__pycache__/image_canvas.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/ui/__pycache__/image_canvas.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/ui/__pycache__/rule_dialog.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/ui/__pycache__/rule_dialog.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/ui/__pycache__/rule_dialog.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/ui/__pycache__/rule_dialog.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/ui/__pycache__/window.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/ui/__pycache__/window.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/ui/__pycache__/window.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/ui/__pycache__/window.cpython-313.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/ui/controller.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/ui/controller.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/ui/image_canvas.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/ui/image_canvas.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/ui/rule_dialog.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/ui/rule_dialog.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/ui/window.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/ui/window.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/ui-copy-contract.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/ui-copy-contract.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_artifacts_numeric_rescan.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_artifacts_numeric_rescan.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_artifacts_numeric_rescan.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_artifacts_numeric_rescan.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_artifacts_visual_rescan.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_artifacts_visual_rescan.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_artifacts_visual_rescan.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_artifacts_visual_rescan.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_artifacts_writer.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_artifacts_writer.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_artifacts_writer.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_artifacts_writer.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_core_detectors.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_core_detectors.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_core_detectors.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_core_detectors.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_core_images.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_core_images.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_core_images.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_core_images.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_core_transforms.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_core_transforms.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_core_transforms.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_core_transforms.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_history.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_history.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_history.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_history.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_office_docx.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_office_docx.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_office_docx.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_office_docx.cpython-312.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_office_docx.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_office_docx.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_office_security.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_office_security.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_office_security.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_office_security.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_office_xlsx.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_office_xlsx.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_office_xlsx.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_office_xlsx.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_rule_dialog.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_rule_dialog.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_rule_dialog.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_rule_dialog.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_rule_library.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_rule_library.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_rule_library.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_rule_library.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_runtime_offline.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_runtime_offline.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_runtime_offline.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_runtime_offline.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_service.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_service.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_service.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_service.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_ui_copy_contract.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_ui_copy_contract.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_ui_copy_contract.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_ui_copy_contract.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_ui_workflow.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_ui_workflow.cpython-312-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/__pycache__/test_ui_workflow.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/__pycache__/test_ui_workflow.cpython-313-pytest-8.4.2.pyc",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_artifacts_numeric_rescan.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_artifacts_numeric_rescan.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_artifacts_visual_rescan.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_artifacts_visual_rescan.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_artifacts_writer.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_artifacts_writer.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_core_detectors.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_core_detectors.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_core_images.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_core_images.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_core_transforms.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_core_transforms.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_history.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_history.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_office_docx.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_office_docx.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_office_security.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_office_security.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_office_xlsx.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_office_xlsx.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_rule_dialog.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_rule_dialog.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_rule_library.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_rule_library.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_runtime_offline.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_runtime_offline.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_service.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_service.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_ui_copy_contract.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_ui_copy_contract.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_ui_workflow.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_ui_workflow.py",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "commands": [
+    {
+      "name": "uiBuild",
+      "command": "npm.cmd --prefix ui run build",
+      "returnCode": 0,
+      "tail": "> local-redactor-v2-ui@0.1.0 build\n> vite build\n\nvite v6.4.2 building for production...\ntransforming...\n✓ 1815 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/client/index.html                   0.54 kB │ gzip:   0.36 kB\ndist/client/assets/index-BzGiSMOO.css   90.11 kB │ gzip:  16.15 kB\ndist/client/assets/index-BFoTbiJI.js   335.41 kB │ gzip: 100.29 kB\n✓ built in 6.98s"
+    },
+    {
+      "name": "shellSelfTest",
+      "command": "python -c \"import sys; sys.path.insert(0,'src'); from local_redactor_v2.app import main; raise SystemExit(main(['--self-test']))\"",
+      "returnCode": 0,
+      "tail": ""
+    },
+    {
+      "name": "unitTests",
+      "command": "python -m pytest",
+      "returnCode": 0,
+      "tail": "============================= test session starts =============================\nplatform win32 -- Python 3.13.13, pytest-8.4.2, pluggy-1.6.0\nrootdir: D:\\AI\\GPT��Ŀ\\ͨ��\\�����ĵ���������-V2\nconfigfile: pyproject.toml\ntestpaths: tests\nplugins: anyio-4.14.2\ncollected 8 items\n\ntests\\test_bridge.py ...                                                 [ 37%]\ntests\\test_docx_loop.py ...                                              [ 75%]\ntests\\test_runtime_offline.py ..                                         [100%]\n\n============================= 8 passed in 25.54s =============================="
+    },
+    {
+      "name": "staticCheck",
+      "command": "python -m ruff check src tests",
+      "returnCode": 0,
+      "tail": "All checks passed!"
+    },
+    {
+      "name": "typeCheck",
+      "command": "python -m mypy src",
+      "returnCode": 0,
+      "tail": "Success: no issues found in 30 source files"
+    },
+    {
+      "name": "step3VisualHarness",
+      "command": "python scripts/verify_step3_preview.py",
+      "returnCode": 0,
+      "tail": "{\"ok\": true, \"viewports\": [{\"width\": 1536, \"height\": 1024, \"step3\": true, \"inlineAnchors\": 7, \"separateRecognitionHeading\": false, \"suggestion\": true, \"rail\": true, \"horizontalOverflow\": false}, {\"width\": 1440, \"height\": 900, \"step3\": true, \"inlineAnchors\": 7, \"separateRecognitionHeading\": false, \"suggestion\": true, \"rail\": true, \"horizontalOverflow\": false}, {\"width\": 1280, \"height\": 720, \"step3\": true, \"inlineAnchors\": 7, \"separateRecognitionHeading\": false, \"suggestion\": true, \"rail\": true, \"horizontalOverflow\": false}]}\n\n[2660:21292:0901/144343.412:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.\n[2660:21292:0901/144343.412:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.\n[2660:21292:0901/144343.568:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.\n[2660:21292:0901/144343.568:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.\n[2660:21292:0901/144343.568:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.\n[2660:21292:0901/144343.568:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization."
+    },
+    {
+      "name": "package",
+      "command": "python scripts/build_windows.py",
+      "returnCode": 1,
+      "tail": "Traceback (most recent call last):\n  File \"D:\\AI\\GPT��Ŀ\\ͨ��\\�����ĵ���������-V2\\scripts\\build_windows.py\", line 145, in <module>\n    print(*build(replace=args.replace), sep=\"\\n\")\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\AI\\GPT��Ŀ\\ͨ��\\�����ĵ���������-V2\\scripts\\build_windows.py\", line 37, in build\n    raise RuntimeError(\"Ŀ���Ѵ��ڣ�ʹ�� --replace �������滻 V2 ������\")\nRuntimeError: Ŀ���Ѵ��ڣ�ʹ�� --replace �������滻 V2 ������"
+    },
+    {
+      "name": "verifyRelease",
+      "command": "python scripts/verify_release.py",
+      "returnCode": 0,
+      "tail": "{\n  \"ok\": true,\n  \"appDir\": \"D:\\\\AI\\\\GPT��Ŀ\\\\ͨ��\\\\�����ĵ���������-V2\\\\dist\\\\�����ĵ���������-V2\",\n  \"archive\": \"D:\\\\AI\\\\GPT��Ŀ\\\\ͨ��\\\\�����ĵ���������-V2\\\\dist\\\\�����ĵ���������-V2-Windows-x64.zip\",\n  \"executableSha256\": \"613183a15321565de92ceaf4b7f317d8fd09f021028e9dce4d1ddb80a1fbf57c\",\n  \"archiveSha256\": \"4fff0b6a91bd4c749a666e875057b7fda74f8bdabad2104141b72d976fb561a6\",\n  \"modelManifestSha256\": \"47d29d3b4d1411d6daded9ffcfa47e429d4e16548fb46a895885d0429234fca8\",\n  \"modelAssetCount\": 34,\n  \"qtWebEngineProcessCount\": 1,\n  \"uiPageCount\": 1\n}"
+    },
+    {
+      "name": "verifyHarness",
+      "command": "python scripts/verify_harness.py",
+      "returnCode": 1,
+      "tail": "{\"passed\": false, \"checks\": 56, \"results\": \"D:\\\\AI\\\\GPT��Ŀ\\\\ͨ��\\\\�����ĵ���������-V2\\\\harness\\\\prototype-results.json\"}"
+    }
+  ],
+  "browserVerification": "Run configured journeys with the in-app browser and record results in harness/progress.md."
+}

@@ -1,0 +1,1112 @@
+{
+  "passed": true,
+  "checkedAt": "2026-09-01T06:20:36.976476+00:00",
+  "phase": "implementation",
+  "checks": [
+    {
+      "name": "implementation phase confirmed",
+      "passed": true,
+      "detail": "implementation"
+    },
+    {
+      "name": "required file: AGENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: DESIGN.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: harness/progress.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: src/App.jsx",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: src/styles.css",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: src/prototypeData.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: src/components/NewTaskView.jsx",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: src/components/RuleLibraryView.jsx",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: src/components/TaskFlowView.jsx",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: public/assets/logo.png",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: 启动UI.bat",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: docs/prototype/00-MODULE_BRIEF.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: docs/prototype/00-MODULE_BRIEF.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: docs/prototype/01-REQUIREMENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: docs/prototype/01-REQUIREMENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: docs/prototype/02-DECISIONS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: docs/prototype/02-DECISIONS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: docs/prototype/03-FIELD_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: docs/prototype/03-FIELD_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: docs/prototype/04-STATE_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: docs/prototype/04-STATE_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: docs/prototype/05-ACCEPTANCE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: docs/prototype/05-ACCEPTANCE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: DESIGN.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: DESIGN.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "command passed: build",
+      "passed": true,
+      "detail": "> ux@0.0.0 build\n> vite build && node scripts/prepare-sites-build.mjs\n\nvite v6.4.2 building for production...\ntransforming...\n✓ 1814 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/client/index.html                   0.48 kB │ gzip:  0.34 kB\ndist/client/assets/index-C-TjYh70.css   90.04 kB │ gzip: 16.13 kB\ndist/client/assets/index-Dn8eAKjQ.js   324.76 kB │ gzip: 96.76 kB\n✓ built in 2.35s\nPrepared Sites build: dist/server/index.js and dist/.openai/hosting.json\n\nnpm notice\nnpm notice New minor version of npm available! 11.9.0 -> 11.19.1\nnpm notice Changelog: https://github.com/npm/cli/releases/tag/v11.19.1\nnpm notice To update run: npm install -g npm@11.19.1\nnpm notice"
+    },
+    {
+      "name": "command passed: projectStaticCheck",
+      "passed": true,
+      "detail": "> node --test tests/sites-worker.test.mjs\n\n✔ serves existing static assets without a fallback (27.38ms)\n✔ falls back to index.html for an unknown app route (1.3359ms)\n✔ does not turn missing API or write requests into the app shell (0.6231ms)\n✔ emits the files required by Sites packaging (5.9796ms)\nℹ tests 4\nℹ suites 0\nℹ pass 4\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 130.4239\n\nnpm notice\nnpm notice New minor version of npm available! 11.9.0 -> 11.19.1\nnpm notice Changelog: https://github.com/npm/cli/releases/tag/v11.19.1\nnpm notice To update run: npm install -g npm@11.19.1\nnpm notice"
+    },
+    {
+      "name": "source corpus found",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 本机离线",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 原文件只读",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 采用建议",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 一键采用全部建议并继续",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 查看全部历史",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 选择单个文件",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 选择文件夹",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 引用规则",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 判断依据",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 规则库",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 技术检查已完成",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 脱敏映射表",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 严禁上传",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 脱敏稿",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 已脱密",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 可安全上传",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 绝对安全",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 100%安全",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 固定侧栏",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "artifact exists: dist/client/index.html",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "artifact exists: dist/server/index.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "artifact exists: dist/.openai/hosting.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "browser journeys configured",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: inline-sidebar",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: inline-sidebar",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: review-feedback",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: review-feedback",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: state-preservation",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: state-preservation",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: history-return",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: history-return",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: single-file-full-loop",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: single-file-full-loop",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: blocked-source",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: blocked-source",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: folder-mixed-queue",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: folder-mixed-queue",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: rule-crud-test",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: rule-crud-test",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: rule-import-conflict",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: rule-import-conflict",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: cited-rule-return",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: cited-rule-return",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: history-actions",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: history-actions",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: simplified-one-click-review",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: simplified-one-click-review",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: unified-module-sidebar",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: unified-module-sidebar",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: anchored-review-and-user-finding",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: anchored-review-and-user-finding",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: simplified-new-and-output-name",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: simplified-new-and-output-name",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/AGENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/AGENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/DESIGN.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/DESIGN.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/BUGFIX_20260807.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/BUGFIX_20260807.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/BUGFIX_20260807_ROUND2.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/BUGFIX_20260807_ROUND2.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/prototype/00-MODULE_BRIEF.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/prototype/00-MODULE_BRIEF.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/prototype/01-REQUIREMENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/prototype/01-REQUIREMENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/prototype/02-DECISIONS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/prototype/02-DECISIONS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/prototype/03-FIELD_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/prototype/03-FIELD_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/prototype/04-STATE_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/prototype/04-STATE_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/prototype/05-ACCEPTANCE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/prototype/05-ACCEPTANCE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/prototype/06-UX_AND_RULE_LIBRARY_REVISION.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/prototype/06-UX_AND_RULE_LIBRARY_REVISION.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/prototype/07-DATA_MASKING_RULEBOOK.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/prototype/07-DATA_MASKING_RULEBOOK.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/docs/prototype/08-ROUND3-CONFIRMATION.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/docs/prototype/08-ROUND3-CONFIRMATION.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/harness/protected-baseline.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/harness/protected-baseline.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/harness/prototype-contract.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/harness/prototype-contract.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/harness/prototype-results.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/harness/prototype-results.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/harness/prototype-revision-contract.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/harness/prototype-revision-contract.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/pyproject.toml",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/pyproject.toml",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/__init__.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/__init__.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/app.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/app.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/artifacts/__init__.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/artifacts/__init__.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/artifacts/encryption.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/artifacts/encryption.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/artifacts/report.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/artifacts/report.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/artifacts/validation.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/artifacts/validation.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/artifacts/writer.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/artifacts/writer.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/builtin_rules.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/builtin_rules.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/__init__.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/__init__.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/common.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/common.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/detectors.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/detectors.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/images.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/images.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/risk.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/risk.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/core/transforms.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/core/transforms.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/history.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/history.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/interfaces.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/interfaces.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/models.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/models.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/office/__init__.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/office/__init__.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/office/common.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/office/common.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/office/docx.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/office/docx.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/office/security.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/office/security.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/office/xlsx.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/office/xlsx.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/rule_library.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/rule_library.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/runtime.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/runtime.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/service.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/service.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/ui/__init__.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/ui/__init__.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/ui/controller.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/ui/controller.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/ui/image_canvas.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/ui/image_canvas.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/ui/rule_dialog.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/ui/rule_dialog.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/src/local_redactor/ui/window.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/src/local_redactor/ui/window.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_artifacts_numeric_rescan.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_artifacts_numeric_rescan.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_artifacts_visual_rescan.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_artifacts_visual_rescan.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_artifacts_writer.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_artifacts_writer.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_core_detectors.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_core_detectors.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_core_images.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_core_images.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_core_transforms.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_core_transforms.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_history.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_history.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_office_docx.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_office_docx.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_office_security.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_office_security.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_office_xlsx.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_office_xlsx.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_rule_dialog.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_rule_dialog.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_rule_library.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_rule_library.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_runtime_offline.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_runtime_offline.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_service.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_service.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_ui_copy_contract.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_ui_copy_contract.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: ../本地文档脱敏工具/tests/test_ui_workflow.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: ../本地文档脱敏工具/tests/test_ui_workflow.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: .openai/hosting.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: .openai/hosting.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: scripts/prepare-sites-build.mjs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: scripts/prepare-sites-build.mjs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: tests/sites-worker.test.mjs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: tests/sites-worker.test.mjs",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: worker/index.js",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: worker/index.js",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "commands": [
+    {
+      "name": "build",
+      "command": "npm run build",
+      "returnCode": 0,
+      "tail": "> ux@0.0.0 build\n> vite build && node scripts/prepare-sites-build.mjs\n\nvite v6.4.2 building for production...\ntransforming...\n✓ 1814 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/client/index.html                   0.48 kB │ gzip:  0.34 kB\ndist/client/assets/index-C-TjYh70.css   90.04 kB │ gzip: 16.13 kB\ndist/client/assets/index-Dn8eAKjQ.js   324.76 kB │ gzip: 96.76 kB\n✓ built in 2.35s\nPrepared Sites build: dist/server/index.js and dist/.openai/hosting.json\n\nnpm notice\nnpm notice New minor version of npm available! 11.9.0 -> 11.19.1\nnpm notice Changelog: https://github.com/npm/cli/releases/tag/v11.19.1\nnpm notice To update run: npm install -g npm@11.19.1\nnpm notice"
+    },
+    {
+      "name": "projectStaticCheck",
+      "command": "npm run test:sites",
+      "returnCode": 0,
+      "tail": "> node --test tests/sites-worker.test.mjs\n\n✔ serves existing static assets without a fallback (27.38ms)\n✔ falls back to index.html for an unknown app route (1.3359ms)\n✔ does not turn missing API or write requests into the app shell (0.6231ms)\n✔ emits the files required by Sites packaging (5.9796ms)\nℹ tests 4\nℹ suites 0\nℹ pass 4\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 130.4239\n\nnpm notice\nnpm notice New minor version of npm available! 11.9.0 -> 11.19.1\nnpm notice Changelog: https://github.com/npm/cli/releases/tag/v11.19.1\nnpm notice To update run: npm install -g npm@11.19.1\nnpm notice"
+    }
+  ],
+  "browserVerification": "Run configured journeys with the in-app browser and record results in harness/progress.md."
+}

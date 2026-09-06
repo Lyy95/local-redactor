@@ -1,0 +1,336 @@
+{
+  "version": 1,
+  "projectName": "本地文档脱敏工具",
+  "moduleName": "本地文档脱敏工具 MVP",
+  "phase": "verified",
+  "baselineStatus": "confirmed-2026-08-07-round3",
+  "productBoundary": "Local AI-analysis-copy generator; not declassification or external-release approval",
+  "runtime": {
+    "platform": "Windows 10/11 x64",
+    "language": "Python",
+    "ui": "PySide6",
+    "networkMode": "offline-no-listener-no-outbound",
+    "packaging": "PyInstaller onedir",
+    "officeRequired": false,
+    "localRecognition": [
+      "RapidOCR PP-OCRv6 small",
+      "offline ONNX Runtime CPU behind a process network-deny guard",
+      "spaCy zh_core_web_sm plus EntityRuler",
+      "OpenCV QRCodeDetector and bundled Haar face-candidate detector",
+      "deterministic validators and local task dictionary"
+    ]
+  },
+  "baselineDocuments": [
+    "docs/prototype/00-MODULE_BRIEF.md",
+    "docs/prototype/01-REQUIREMENTS.md",
+    "docs/prototype/02-DECISIONS.md",
+    "docs/prototype/03-FIELD_MATRIX.md",
+    "docs/prototype/04-STATE_MATRIX.md",
+    "docs/prototype/05-ACCEPTANCE.md",
+    "docs/prototype/07-DATA_MASKING_RULEBOOK.md",
+    "docs/prototype/08-ROUND3-CONFIRMATION.md",
+    "DESIGN.md",
+    "docs/prototype/06-UX_AND_RULE_LIBRARY_REVISION.md"
+  ],
+  "requiredFiles": [
+    "AGENTS.md",
+    "DESIGN.md",
+    "harness/progress.md",
+    "pyproject.toml",
+    "scripts/verify_release.py",
+    "scripts/build_windows.py",
+    "harness/prototype-revision-contract.json"
+  ],
+  "sourceRoots": [
+    "src/ui-copy-contract.json"
+  ],
+  "artifactPaths": [
+    "dist/本地文档脱敏工具/本地文档脱敏工具.exe",
+    "dist/本地文档脱敏工具-Windows-x64.zip"
+  ],
+  "commands": {
+    "build": ".venv\\Scripts\\python.exe scripts\\build_windows.py --replace",
+    "typecheck": ".venv\\Scripts\\python.exe -m mypy --no-incremental --no-sqlite-cache --no-fixed-format-cache --cache-dir NUL src",
+    "lint": ".venv\\Scripts\\python.exe -m ruff check --no-cache src tests scripts",
+    "projectStaticCheck": ".venv\\Scripts\\python.exe scripts\\verify_release.py",
+    "test": ".venv\\Scripts\\python.exe -m pytest -q -p no:cacheprovider --basetemp build\\pytest-contract",
+    "selfTest": "dist\\本地文档脱敏工具\\本地文档脱敏工具.exe --self-test"
+  },
+  "requiredTerms": [
+    "本机离线",
+    "规则库",
+    "采用建议",
+    "采用全部普通建议",
+    "以后都这样处理",
+    "必须替换",
+    "AI分析副本",
+    "映射表严禁上传",
+    "已阻断",
+    "技术检查已完成",
+    "仍需按单位制度确认是否可外发"
+  ],
+  "forbiddenTerms": [
+    "已脱密",
+    "已解密",
+    "可安全上传",
+    "绝对安全",
+    "100%安全",
+    "确认并应用策略",
+    "一致别名",
+    "结构模拟",
+    "降低精度",
+    "区间化",
+    "统一平移",
+    "比例变换",
+    "像素处理",
+    "转为可见附注"
+  ],
+  "allowedChangePaths": [
+    "src/**",
+    "tests/**",
+    "scripts/**",
+    "assets/**",
+    "docs/prototype/**",
+    "harness/**",
+    "DESIGN.md",
+    "pyproject.toml",
+    "requirements*.txt",
+    "*.spec"
+  ],
+  "protectedPaths": [
+    "AGENTS.md"
+  ],
+  "securityConstraints": {
+    "sourceFileReadOnly": true,
+    "persistOriginalTextOutsideLocalMapping": false,
+    "persistPlaintextEntityMappingOutsideLocalCustody": false,
+    "exportPasswordEncryptedXlsxMapping": false,
+    "exportPasswordFreeLocalXlsxMapping": true,
+    "storeMappingPassword": false,
+    "separateAiDeliveryAndLocalCustody": true,
+    "logOriginalText": false,
+    "logMapping": false,
+    "logPassword": false,
+    "networkAccess": false,
+    "remoteAssets": false,
+    "telemetry": false,
+    "runtimeModelDownload": false,
+    "autoUpdate": false,
+    "clipboardExport": false,
+    "directAiUpload": false,
+    "inventoryAllOoxmlPartsAndRelationships": true,
+    "requireHumanDecisionForEveryImage": false,
+    "autoRemoveHiddenContentAndObjects": true,
+    "rewriteAndReencodeRedactedImages": true,
+    "rebuildOutputsFromBlankContainers": false,
+    "preserveOriginalDocxLayout": true,
+    "reviewOnlySensitiveImages": true,
+    "encryptedTaskHistory": true,
+    "folderProcessingQueue": true,
+    "incrementalRuleApplicationWithoutOcrRerun": true,
+    "persistDeletedPresets": true,
+    "rescanActualOutputBytes": true,
+    "failClosedOnUnknownContent": true,
+    "fixturesMustBeFictional": true,
+    "persistentRuleLibraryEncryptedForCurrentWindowsUser": true,
+    "failClosedOnRuleStoreError": true,
+    "freezeRuleSnapshotPerTask": false,
+    "mandatoryRuleCannotKeepOriginal": true,
+    "batchReviewCannotResolveImagesOrUnknownHighRiskObjects": true
+  },
+  "formatContract": {
+    "inputs": [
+      "docx",
+      "xlsx"
+    ],
+    "outputs": [
+      "original-layout-sanitized-docx",
+      "clean-rebuilt-xlsx",
+      "password-free-local-xlsx-mapping",
+      "local-html-technical-report"
+    ],
+    "blocked": [
+      "doc",
+      "xls",
+      "docm",
+      "xlsm",
+      "xlsb",
+      "encrypted-file",
+      "irm-protected-file",
+      "macro-or-activex",
+      "damaged-file",
+      "spoofed-extension",
+      "unsafe-archive",
+      "unresolved-embedded-object"
+    ]
+  },
+  "taskResultLayout": {
+    "aiDelivery": [
+      "AI交付/AI分析副本.docx-or-xlsx"
+    ],
+    "localCustody": [
+      "本地保管/脱敏映射表.xlsx",
+      "本地保管/脱敏检查报告.html"
+    ]
+  },
+  "deployment": {
+    "environment": "local-windows-package",
+    "requiresFinalConfirmation": true,
+    "skill": "",
+    "status": "not-authorized",
+    "projectName": "LocalRedactor",
+    "accessUrl": ""
+  },
+  "browserJourneys": [
+    {
+      "id": "minimum-loop",
+      "name": "Desktop minimum business loop",
+      "driver": "computer-use",
+      "steps": [
+        "Launch the packaged app offline",
+        "Select a fictional DOCX fixture with the recommended readable mode",
+        "Finish OOXML, text, image, hidden-content and combination-risk detection",
+        "Review every text, visual and object item",
+        "Compare original and semantic-preserving output",
+        "Review the password-free local-custody warning",
+        "Generate the same-format analysis copy, local mapping table and report",
+        "Wait for independent output rescan",
+        "Open AI交付 and 本地保管 separately"
+      ],
+      "expected": [
+        "The source file is unchanged",
+        "Roles, relationships, sequence and quantity scale remain understandable",
+        "The same entity uses one replacement across text, tables and image OCR",
+        "No confirmed original value remains in the analysis copy or report",
+        "Only the local-custody mapping table contains reversible originals",
+        "The completion copy does not claim declassification or upload safety"
+      ]
+    },
+    {
+      "id": "xlsx-loop",
+      "name": "Excel semantic and structural loop",
+      "driver": "computer-use",
+      "steps": [
+        "Open a fictional XLSX with repeated entities, formulas, hidden sheets, comments, images and external links",
+        "Resolve all text, visual, hidden and object findings",
+        "Generate and rescan the XLSX analysis copy"
+      ],
+      "expected": [
+        "Visible grid, merged cells, basic styles and numeric types remain readable",
+        "Formulas and external links are absent",
+        "All output sheets, rows and columns are visible",
+        "The mapping rows reconcile with every transformed entity"
+      ]
+    },
+    {
+      "id": "protected-regression",
+      "name": "Fail-closed Office security workflow",
+      "driver": "computer-use",
+      "steps": [
+        "Open legacy, encrypted, macro-enabled, damaged, spoofed and unsafe OOXML fixtures",
+        "Inspect each blocking reason",
+        "Attempt to continue to export"
+      ],
+      "expected": [
+        "Each task enters Blocked",
+        "No override or export action is available",
+        "No source text or full path appears in logs"
+      ]
+    },
+    {
+      "id": "navigation-return",
+      "name": "Task return and mapping cleanup",
+      "driver": "computer-use",
+      "steps": [
+        "Complete a fictional task",
+        "Choose New task",
+        "Return to file selection",
+        "Inspect safe diagnostic state"
+      ],
+      "expected": [
+        "Prior text and plaintext mappings are unavailable in application state",
+        "The completed sensitive mapping table remains under 本地保管",
+        "The app remains fully functional without network"
+      ]
+    },
+    {
+      "id": "simplified-review-feedback",
+      "name": "Plain-language review with immediate feedback",
+      "driver": "computer-use",
+      "steps": [
+        "Open the 确认处理 step with several ordinary text findings",
+        "Choose 采用建议 on the current card",
+        "Observe the card, pending count and selection"
+      ],
+      "expected": [
+        "The current item visibly completes",
+        "The pending count decreases immediately",
+        "A short success message appears",
+        "The next pending item is selected",
+        "No forbidden internal strategy term is visible"
+      ]
+    },
+    {
+      "id": "safe-batch-review",
+      "name": "One-click ordinary review without security bypass",
+      "driver": "computer-use",
+      "steps": [
+        "Open a fictional mixed task with ordinary text, an image, combination risk and an embedded object",
+        "Choose 采用全部普通建议"
+      ],
+      "expected": [
+        "Ordinary and deterministic-rule text findings complete",
+        "The image and combination risk remain pending while removable hidden objects are already marked removed",
+        "Export remains blocked until excluded items are explicitly resolved"
+      ]
+    },
+    {
+      "id": "persistent-rule-library",
+      "name": "Encrypted persistent fixed replacement and mandatory standard",
+      "driver": "computer-use",
+      "steps": [
+        "Add 公安 to GA and a mandatory 530网 to 5**网 standard",
+        "Close and restart the application",
+        "Scan a fictional DOCX or XLSX containing the terms",
+        "Attempt to keep an original mandatory match"
+      ],
+      "expected": [
+        "Both rules persist for the current Windows user",
+        "The same result is used across text, cells and OCR",
+        "Keeping a mandatory original is unavailable",
+        "The local-custody task mapping records the rule source",
+        "The rule library itself is absent from AI交付 and the HTML report"
+      ]
+    },
+    {
+      "id": "preserve-time-expressions",
+      "name": "Preserve dates and times verbatim",
+      "driver": "computer-use",
+      "steps": [
+        "Scan a fictional DOCX or XLSX containing dates and times",
+        "Open the review step",
+        "Inspect the final preview"
+      ],
+      "expected": [
+        "No time finding enters the review list",
+        "Dates and times remain unchanged in the final preview",
+        "Time findings do not create or contribute to combination risk"
+      ]
+    },
+    {
+      "id": "common-pii-masking",
+      "name": "Common structured personal-data masking",
+      "driver": "computer-use",
+      "steps": [
+        "Scan a fictional DOCX or XLSX containing common personal fields",
+        "Inspect the suggested replacements",
+        "Include one valid and one invalid unlabeled bank-card-shaped number"
+      ],
+      "expected": [
+        "Names, mobile numbers, ID cards, emails and landlines use the confirmed masks",
+        "Only the unlabeled number that passes Luhn validation is classified as a bank card",
+        "The bank card retains only the approved first six and last four digits"
+      ]
+    }
+  ]
+}

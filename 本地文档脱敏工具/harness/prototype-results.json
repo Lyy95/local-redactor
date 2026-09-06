@@ -1,0 +1,384 @@
+{
+  "passed": true,
+  "checkedAt": "2026-08-07T07:54:17.545338+00:00",
+  "phase": "verified",
+  "checks": [
+    {
+      "name": "implementation phase confirmed",
+      "passed": true,
+      "detail": "verified"
+    },
+    {
+      "name": "required file: AGENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: DESIGN.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: harness/progress.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: pyproject.toml",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: scripts/verify_release.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: scripts/build_windows.py",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required file: harness/prototype-revision-contract.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: docs/prototype/00-MODULE_BRIEF.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: docs/prototype/00-MODULE_BRIEF.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: docs/prototype/01-REQUIREMENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: docs/prototype/01-REQUIREMENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: docs/prototype/02-DECISIONS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: docs/prototype/02-DECISIONS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: docs/prototype/03-FIELD_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: docs/prototype/03-FIELD_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: docs/prototype/04-STATE_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: docs/prototype/04-STATE_MATRIX.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: docs/prototype/05-ACCEPTANCE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: docs/prototype/05-ACCEPTANCE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: docs/prototype/07-DATA_MASKING_RULEBOOK.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: docs/prototype/07-DATA_MASKING_RULEBOOK.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: DESIGN.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: DESIGN.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "baseline document exists: docs/prototype/06-UX_AND_RULE_LIBRARY_REVISION.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no unresolved template token: docs/prototype/06-UX_AND_RULE_LIBRARY_REVISION.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "source corpus found",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 本机离线",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 规则库",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 采用建议",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 采用全部普通建议",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 以后都这样处理",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 必须替换",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: AI分析副本",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 映射表严禁上传",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 已阻断",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 技术检查已完成",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required term: 仍需按单位制度确认是否可外发",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 已脱密",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 已解密",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 可安全上传",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 绝对安全",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 100%安全",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 确认并应用策略",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 一致别名",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 结构模拟",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 降低精度",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 区间化",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 统一平移",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 比例变换",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 像素处理",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forbidden term absent: 转为可见附注",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "artifact exists: dist/本地文档脱敏工具/本地文档脱敏工具.exe",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "artifact exists: dist/本地文档脱敏工具-Windows-x64.zip",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "browser journeys configured",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: minimum-loop",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: minimum-loop",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: xlsx-loop",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: xlsx-loop",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: protected-regression",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: protected-regression",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: navigation-return",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: navigation-return",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: simplified-review-feedback",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: simplified-review-feedback",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: safe-batch-review",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: safe-batch-review",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: persistent-rule-library",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: persistent-rule-library",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: preserve-time-expressions",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: preserve-time-expressions",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has steps: common-pii-masking",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "journey has expected results: common-pii-masking",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file exists: AGENTS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "protected file unchanged: AGENTS.md",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "commands": [],
+  "browserVerification": "Run configured journeys with the in-app browser and record results in harness/progress.md."
+}

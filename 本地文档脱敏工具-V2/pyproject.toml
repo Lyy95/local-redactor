@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "local-redactor-v2"
+version = "0.1.0"
+description = "Native offline desktop shell for the Local Redactor UX"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+  "PySide6-Essentials>=6.8,<7",
+  "PySide6-Addons>=6.8,<7",
+  "python-docx>=1.2,<2",
+  "openpyxl>=3.1,<4",
+  "lxml>=5.3,<7",
+  "Pillow>=11,<13",
+  "cryptography>=44,<50",
+  "msoffcrypto-tool>=6,<7",
+  "rapidocr>=3.4,<4",
+  "onnxruntime>=1.20,<2",
+  "opencv-python>=4.10,<5",
+  "spacy>=3.8,<4",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3,<9", "ruff>=0.9,<1", "mypy>=1.14,<2", "pyinstaller>=6.11,<7"]
+
+[project.scripts]
+local-redactor-v2 = "local_redactor_v2.app:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-ra -p no:cacheprovider --basetemp=.pytest-tmp"
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+ignore = ["E501"]

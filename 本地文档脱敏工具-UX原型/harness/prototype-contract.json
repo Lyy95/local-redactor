@@ -1,0 +1,134 @@
+{
+  "version": 1,
+  "projectName": "本地文档脱敏工具-UX原型",
+  "moduleName": "本地文档脱敏完整闭环 UX 原型",
+  "phase": "implementation",
+  "baselineStatus": "confirmed-full-flow-2026-08-10",
+  "baselineDocuments": [
+    "docs/prototype/00-MODULE_BRIEF.md",
+    "docs/prototype/01-REQUIREMENTS.md",
+    "docs/prototype/02-DECISIONS.md",
+    "docs/prototype/03-FIELD_MATRIX.md",
+    "docs/prototype/04-STATE_MATRIX.md",
+    "docs/prototype/05-ACCEPTANCE.md",
+    "DESIGN.md"
+  ],
+  "requiredFiles": ["AGENTS.md", "DESIGN.md", "harness/progress.md", "src/App.jsx", "src/styles.css", "src/prototypeData.js", "src/components/NewTaskView.jsx", "src/components/RuleLibraryView.jsx", "src/components/TaskFlowView.jsx", "public/assets/logo.png", "启动UI.bat"],
+  "sourceRoots": ["src"],
+  "artifactPaths": ["dist/client/index.html", "dist/server/index.js", "dist/.openai/hosting.json"],
+  "commands": {
+    "build": "npm run build",
+    "typecheck": "",
+    "lint": "",
+    "projectStaticCheck": "npm run test:sites"
+  },
+  "requiredTerms": ["本机离线", "原文件只读", "采用建议", "一键采用全部建议并继续", "查看全部历史", "选择单个文件", "选择文件夹", "引用规则", "判断依据", "规则库", "技术检查已完成", "脱敏映射表", "严禁上传", "脱敏稿"],
+  "forbiddenTerms": ["已脱密", "可安全上传", "绝对安全", "100%安全", "固定侧栏"],
+  "allowedChangePaths": ["src/**", "public/assets/**", "references/**", "qa/**", "docs/prototype/**", "harness/**", "AGENTS.md", "DESIGN.md", "design-qa.md", "package.json", "package-lock.json", "启动UI.bat"],
+  "protectedPaths": [
+    ".openai/hosting.json",
+    "worker/index.js",
+    "scripts/prepare-sites-build.mjs",
+    "tests/sites-worker.test.mjs",
+    "../本地文档脱敏工具/AGENTS.md",
+    "../本地文档脱敏工具/DESIGN.md",
+    "../本地文档脱敏工具/pyproject.toml",
+    "../本地文档脱敏工具/src/**/*.py",
+    "../本地文档脱敏工具/docs/**/*.md",
+    "../本地文档脱敏工具/harness/*.json",
+    "../本地文档脱敏工具/tests/**/*.py"
+  ],
+  "deployment": {"environment": "none", "requiresFinalConfirmation": true, "skill": "", "status": "not-authorized", "projectName": "", "accessUrl": ""},
+  "browserJourneys": [
+    {
+      "id": "inline-sidebar",
+      "name": "Collapsed rail expands only from its explicit icon",
+      "steps": ["Open at 1536x1024", "Verify collapsed rail", "Click 任务 or 规则", "Verify width stays collapsed", "Click 展开侧栏", "Measure sidebar and workspace", "Click collapse chevron"],
+      "expected": ["Collapsed width is 104px", "Module clicks do not expand", "Dedicated icon expands to 420px", "Workspace is pushed with zero overlap", "No overlay, backdrop, pin or floating task card"]
+    },
+    {
+      "id": "review-feedback",
+      "name": "Plain-language review with immediate feedback",
+      "steps": ["Open current task", "Select a highlighted entity", "Choose 采用建议"],
+      "expected": ["Pending count decreases", "Marker resolves", "Short feedback appears", "Next pending item is selected"]
+    },
+    {
+      "id": "state-preservation",
+      "name": "Sidebar toggle preserves review state",
+      "steps": ["Resolve one item", "Expand and collapse sidebar", "Inspect current task"],
+      "expected": ["Resolved count and active finding remain", "No document reload or reset"]
+    },
+    {
+      "id": "history-return",
+      "name": "Historical task selection and return",
+      "steps": ["Expand sidebar", "Select a completed historical task", "Return to current task"],
+      "expected": ["History summary is visible", "Current review state restores"]
+    },
+    {
+      "id": "single-file-full-loop",
+      "name": "Single fictional DOCX reaches result and history",
+      "steps": ["Open 新建", "Choose 虚构项目方案.docx", "Acknowledge boundary", "Start check", "Start review", "Resolve all findings", "Enter generation", "Generate files", "Open task history"],
+      "expected": ["Steps advance in order", "Pending count reaches zero before generation", "Separated result cards appear", "Completed task is reflected in history"]
+    },
+    {
+      "id": "blocked-source",
+      "name": "Blocked fictional encrypted source has a valid return path",
+      "steps": ["Open 新建", "Choose 加密资料.docx", "Acknowledge boundary", "Start check"],
+      "expected": ["Blocked reason is visible", "Review and generation are unavailable", "Choose-another-source action returns to selection"]
+    },
+    {
+      "id": "folder-mixed-queue",
+      "name": "Folder queue distinguishes supported excluded and failed items",
+      "steps": ["Open 新建", "Choose 项目资料文件夹", "Inspect queue", "Start queue", "Continue after one failed item"],
+      "expected": ["Counts match rows", "Failed item is not shown as success", "Later item remains processable", "Batch summary is coherent"]
+    },
+    {
+      "id": "rule-crud-test",
+      "name": "Rule library CRUD and fictional test",
+      "steps": ["Open 规则", "Add rule", "Test with fictional input", "Save", "Toggle off and on", "Edit or copy", "Delete copied rule"],
+      "expected": ["Every action updates the list", "Test result shows match and output", "Deleted row is removed only after confirmation"]
+    },
+    {
+      "id": "rule-import-conflict",
+      "name": "Rule import conflict never silently overwrites",
+      "steps": ["Open rule import", "Inspect new duplicate and conflicting counts", "Choose 保留现有规则 or 采用导入规则", "Complete import"],
+      "expected": ["Conflict choice is explicit", "Result counts match the choice", "Cancel leaves rules unchanged"]
+    },
+    {
+      "id": "cited-rule-return",
+      "name": "Review citation opens the rule and returns to the same finding",
+      "steps": ["Open current review finding", "Open cited rule", "Edit and save", "Return to review"],
+      "expected": ["Rule row is focused", "Incremental-apply feedback appears", "Same finding returns", "Unrelated resolved findings remain"]
+    },
+    {
+      "id": "history-actions",
+      "name": "History actions follow task state",
+      "steps": ["Open all history", "Continue unfinished task", "Retry failed task", "View completed result", "Delete one ended record"],
+      "expected": ["Only valid state actions are shown", "Record counts update", "No source value full path or reversible mapping is displayed"]
+    },
+    {
+      "id": "simplified-one-click-review",
+      "name": "One-click review with optional evidence and manual adjustment",
+      "steps": ["Open current review", "Expand rule evidence", "Collapse evidence", "Choose 一键采用全部建议并继续"],
+      "expected": ["Suggestion card stays in normal flow", "Evidence is hidden by default", "All findings resolve", "Step 4 opens"]
+    },
+    {
+      "id": "unified-module-sidebar",
+      "name": "Task and Rule share an inline module sidebar",
+      "steps": ["Open Task", "Switch to Rule", "Switch back to Task", "Manually collapse and reopen"],
+      "expected": ["Module switch preserves expanded width", "Sidebar content changes by module", "New task is inside Task", "No overlay or automatic collapse"]
+    },
+    {
+      "id": "anchored-review-and-user-finding",
+      "name": "Anchored full-action review and user-added finding",
+      "steps": ["Open Step 3", "Select a document entity", "Verify anchored popover and right list", "Expand evidence", "Add fictional redaction content", "Resolve the new item", "Return to Step 2"],
+      "expected": ["Popover stays beside selected content", "All four actions are available", "Evidence disclosure is compact", "Added item updates document/list/count", "Previous-step navigation preserves review state"]
+    },
+    {
+      "id": "simplified-new-and-output-name",
+      "name": "Quick new task and source-based output naming",
+      "steps": ["Open 新建任务 from Task sidebar", "Inspect collapsed details", "Start a fictional file", "Use one-click review", "Open generation"],
+      "expected": ["New page is compact", "Details expand on demand", "AI copy and folder use 原文件名-脱敏稿", "Toast is top-centered"]
+    }
+  ]
+}
