@@ -161,6 +161,13 @@ def _remove_all_images(controller) -> None:
 
 
 def _close_cli_review(controller, bundle, args) -> None:
+    if args.apply_ordinary and not args.apply_all and not args.keep_rest:
+        print(
+            "提示：--apply-ordinary 只采用高把握文字（≥0.8，不含组合贡献项和图片）；"
+            "命令行已自动按 --keep-rest 收口其余项才能导出。",
+            file=sys.stderr,
+        )
+        args.keep_rest = True
     if args.apply_ordinary:
         controller.resolve_ordinary_findings()
     if args.apply_all:
@@ -192,8 +199,6 @@ def _close_cli_review(controller, bundle, args) -> None:
             )
     if args.apply_all or args.keep_rest:
         _remove_all_images(controller)
-        # Visual findings stay PENDING because apply-all/keep-rest skip them.
-        # After whole-image REMOVE, resolve so export is not blocked.
         for finding in list(bundle.findings):
             if finding.status is not FindingStatus.PENDING:
                 continue
@@ -238,9 +243,13 @@ def run(argv: list[str] | None = None) -> int:
     parser.add_argument("source", type=Path)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--mode", choices=["balanced", "strict"], default="balanced")
-    parser.add_argument("--apply-ordinary", action="store_true")
-    parser.add_argument("--apply-all", action="store_true")
-    parser.add_argument("--keep-rest", action="store_true")
+    parser.add_argument(
+        "--apply-ordinary",
+        action="store_true",
+        help="采用高把握文字建议（置信度≥0.8、正文/单元格、非组合贡献、非图片）。未加 --keep-rest 时命令行会自动收口。",
+    )
+    parser.add_argument("--apply-all", action="store_true", help="采用全部未决文字建议（不含图片项和组合风险卡片）")
+    parser.add_argument("--keep-rest", action="store_true", help="其余文字保留原文；图片删除")
     parser.add_argument("--regex-only", action="store_true")
     parser.add_argument("--no-persist", action="store_true")
     parser.add_argument("--json", action="store_true")
