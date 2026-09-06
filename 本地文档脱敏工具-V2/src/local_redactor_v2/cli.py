@@ -145,12 +145,15 @@ def _finding_is_visual(finding) -> bool:
 
 def _remove_all_images(controller) -> None:
     document = controller._document
+    bundle = controller._bundle
     if document is None:
         return
     for image in document.images:
-        if image.disposition is ImageDisposition.REMOVE:
-            continue
-        controller.resolve_image(image.id, ImageDisposition.REMOVE)
+        image.disposition = ImageDisposition.REMOVE
+        image.regions.clear()
+    if bundle is not None:
+        for review in bundle.images:
+            review.disposition = ImageDisposition.REMOVE
 
 
 def _close_cli_review(controller, bundle, args) -> None:
