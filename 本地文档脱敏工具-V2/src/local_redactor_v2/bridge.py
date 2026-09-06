@@ -11,7 +11,7 @@ from uuid import uuid4
 from PySide6.QtCore import Property, QObject, Signal, Slot
 from PySide6.QtWidgets import QFileDialog, QWidget
 
-from local_redactor.models import Category, Finding, FindingStatus, ProcessingMode, TransformMethod
+from local_redactor.models import Category, Finding, FindingStatus, Modality, ProcessingMode, TransformMethod
 from local_redactor.service import LocalDesktopController
 from local_redactor.ui.controller import ReviewBundle
 
@@ -373,6 +373,7 @@ class DesktopBridge(QObject):
                     "end": item.end,
                     "display": item.display,
                     "part": item.part,
+                    "imageId": item.image_id,
                 }
                 for item in finding.locations
             ],
@@ -380,7 +381,24 @@ class DesktopBridge(QObject):
             "severity": "强制执行" if finding.metadata.get("rule_mandatory") else "建议替换",
             "confidence": f"{round(finding.confidence * 100)}%",
             "source": finding.detector,
-            "actionSet": "text",
+            "actionSet": (
+                "image"
+                if finding.modality is Modality.IMAGE
+                or any(item.image_id for item in finding.locations)
+                or finding.category
+                in {
+                    Category.IMAGE_TEXT,
+                    Category.SEAL,
+                    Category.SIGNATURE,
+                    Category.QR_CODE,
+                    Category.PHOTO,
+                }
+                else "hidden"
+                if finding.modality is Modality.HIDDEN
+                else "combined"
+                if finding.category is Category.COMBINATION_RISK
+                else "text"
+            ),
             "rule": {
                 "id": str(finding.metadata.get("rule_id", f"detector:{finding.detector}")),
                 "source": "fixed" if finding.metadata.get("rule_id") else "builtin",

@@ -27,6 +27,7 @@ import {
   XCircle,
 } from "lucide-react";
 import { outputFiles as fallbackOutputFiles, scanStages as fallbackScanStages } from "../prototypeData.js";
+import { isVisualFinding } from "../previewGuards.js";
 import "./task-flow.css";
 import "./sheet-grid.css";
 
@@ -320,7 +321,7 @@ function FindingValue({ finding, selected, resolution, replacement, onSelect }) 
 
 function previewRanges(block, findings, selectedFindingId) {
   const candidates = findings.flatMap((finding) => (finding.locations || [])
-    .filter((location) => location.blockId === block.id && Number.isInteger(location.start) && Number.isInteger(location.end) && location.start >= 0 && location.end > location.start && location.end <= block.text.length)
+    .filter((location) => !isVisualFinding(finding, location) && location.blockId === block.id && Number.isInteger(location.start) && Number.isInteger(location.end) && location.start >= 0 && location.end > location.start && location.end <= block.text.length)
     .map((location) => ({ finding, start: location.start, end: location.end })));
   candidates.sort((left, right) => {
     const selectedOrder = Number(right.finding.id === selectedFindingId) - Number(left.finding.id === selectedFindingId);
@@ -483,7 +484,7 @@ function DocumentPreview({ findings, resolutions, replacements, selectedFindingI
     const documentTitle = titleBlock?.text || String(sourceName || "文档内容预览").replace(/\.docx$/i, "");
     const displayedBlocks = blocks.filter((_block, index) => index !== titleIndex);
     const anchoredFindingIds = new Set(blocks.flatMap((block) => previewRanges(block, findings, selectedFindingId).map((item) => item.finding.id)));
-    const unanchoredFindings = findings.filter((finding) => !anchoredFindingIds.has(finding.id) && finding.category !== "图片");
+    const unanchoredFindings = findings.filter((finding) => !anchoredFindingIds.has(finding.id) && finding.category !== "图片" && finding.actionSet !== "image");
     return (
       <article className="tf-document" aria-label="DOCX 正文预览">
         <div className="tf-document-chip"><FileText size={15} />原文件只读</div>
