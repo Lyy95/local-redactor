@@ -239,6 +239,8 @@ class DesktopBridge(QObject):
                 "original": preview.original,
                 "replacement": preview.replacement,
                 "preservedSummary": preview.preserved_summary,
+                "kind": getattr(preview, "kind", "docx"),
+                "sheets": list(getattr(preview, "sheets", ())),
                 "blocks": list(preview.blocks),
             }
         )
@@ -337,6 +339,8 @@ class DesktopBridge(QObject):
                 "original": bundle.preview.original,
                 "replacement": bundle.preview.replacement,
                 "preservedSummary": bundle.preview.preserved_summary,
+                "kind": getattr(bundle.preview, "kind", "docx"),
+                "sheets": list(getattr(bundle.preview, "sheets", ())),
                 "blocks": list(bundle.preview.blocks),
             }
             if bundle

@@ -137,6 +137,10 @@ def apply_findings_to_text(
             location for location in finding.locations if _location_matches(block, location)
         ]
         if not matched_locations:
+            # Same confirmed original may appear in another block (e.g. table cell)
+            # that the detector missed (Luhn fail / no label). Still scrub it.
+            if finding.original and finding.original in block.text:
+                fallbacks.append((finding.original, replacement))
             continue
         for location in matched_locations:
             if location.start is None or location.end is None:

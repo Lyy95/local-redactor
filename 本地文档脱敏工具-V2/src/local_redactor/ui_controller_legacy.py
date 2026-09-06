@@ -70,6 +70,9 @@ class PreviewContent:
     original: str
     replacement: str
     preserved_summary: str
+    blocks: tuple[dict, ...] = ()
+    kind: str = "docx"
+    sheets: tuple[dict, ...] = ()
 
 
 @dataclass(slots=True)

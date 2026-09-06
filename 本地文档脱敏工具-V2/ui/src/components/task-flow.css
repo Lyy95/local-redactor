@@ -424,3 +424,18 @@
   .task-flow *::before,
   .task-flow *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+.tf-workbook { position: relative; width: min(100%, 1100px); min-height: 100%; margin: 0 auto; padding: 28px 8px 80px; color: #262d31; }
+.tf-workbook > h1 { margin: 8px 0 16px; color: #15191c; font-size: 20px; }
+.tf-sheet-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; }
+.tf-sheet-tabs button { padding: 6px 12px; border: 1px solid #d7e0dc; border-radius: 8px; background: #f6f8f7; color: #3d4844; font-size: 13px; }
+.tf-sheet-tabs button.is-active { background: #1f7a62; border-color: #1f7a62; color: #fff; }
+.tf-sheet-scroll { overflow: auto; border: 1px solid #d7e0dc; border-radius: 10px; background: #fff; }
+.tf-sheet-grid { border-collapse: collapse; min-width: 100%; font-size: 13px; }
+.tf-sheet-grid th,
+.tf-sheet-grid td { border: 1px solid #e3eae7; padding: 7px 9px; vertical-align: top; text-align: left; }
+.tf-sheet-grid thead th,
+.tf-sheet-grid tbody th { background: #f3f6f5; color: #5b6662; font-weight: 600; white-space: nowrap; }
+.tf-sheet-corner { width: 36px; }
+.tf-sheet-grid td.is-selected-cell { background: #fff6df; }
+

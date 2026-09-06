@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 import { outputFiles as fallbackOutputFiles, scanStages as fallbackScanStages } from "../prototypeData.js";
 import "./task-flow.css";
+import "./sheet-grid.css";
 
 const STEP_LABELS = ["选文件", "自动检查", "确认处理", "生成文件"];
 const GENERATION_STAGES = [
@@ -358,6 +359,88 @@ function PreviewBlock({ block, findings, resolutions, replacements, selectedFind
   return <section data-preview-block-id={block.id}>{isHeading ? <h2>{content}</h2> : <p>{content}</p>}</section>;
 }
 
+function PreviewCell({ block, findings, resolutions, replacements, selectedFindingId, onSelectFinding }) {
+  if (!block?.text) return null;
+  const ranges = previewRanges(block, findings, selectedFindingId);
+  if (!ranges.length) return block.text;
+  const content = [];
+  let cursor = 0;
+  ranges.forEach(({ finding, start, end }) => {
+    if (start > cursor) content.push(block.text.slice(cursor, start));
+    content.push(
+      <FindingValue
+        key={`${block.id}-${finding.id}-${start}`}
+        finding={finding}
+        selected={selectedFindingId === finding.id}
+        resolution={getResolution(resolutions, finding.id)}
+        replacement={replacements?.[finding.id]}
+        onSelect={onSelectFinding}
+      />,
+    );
+    cursor = end;
+  });
+  if (cursor < block.text.length) content.push(block.text.slice(cursor));
+  return content;
+}
+
+function SpreadsheetPreview({ preview, findings, resolutions, replacements, selectedFindingId, onSelectFinding, sourceName }) {
+  const sheets = preview.sheets || [];
+  const [activeName, setActiveName] = useState(sheets[0]?.name || "");
+  const active = sheets.find((sheet) => sheet.name === activeName) || sheets[0];
+  const blockById = Object.fromEntries((preview.blocks || []).map((block) => [block.id, block]));
+  if (!active) return null;
+  return (
+    <article className="tf-workbook" aria-label="Excel 工作表预览">
+      <div className="tf-document-chip"><Sheet size={15} />原文件只读 · 按单元格复核</div>
+      <h1>{String(sourceName || "工作簿").replace(/\.xlsx$/i, "")}</h1>
+      {sheets.length > 1 && (
+        <div className="tf-sheet-tabs" role="tablist" aria-label="工作表">
+          {sheets.map((sheet) => (
+            <button
+              key={sheet.name}
+              type="button"
+              role="tab"
+              aria-selected={sheet.name === active.name}
+              className={sheet.name === active.name ? "is-active" : ""}
+              onClick={() => setActiveName(sheet.name)}
+            >
+              {sheet.name}
+            </button>
+          ))}
+        </div>
+      )}
+      <div className="tf-sheet-scroll">
+        <table className="tf-sheet-grid">
+          <thead>
+            <tr>
+              <th className="tf-sheet-corner" />
+              {(active.columns || []).map((column) => <th key={column}>{column}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {(active.rows || []).map((row) => (
+              <tr key={row.row}>
+                <th>{row.row}</th>
+                {(row.cells || []).map((cell) => {
+                  const block = cell.id ? blockById[cell.id] : null;
+                  const hit = block && previewRanges(block, findings, selectedFindingId).some((item) => item.finding.id === selectedFindingId);
+                  return (
+                    <td key={cell.address} className={hit ? "is-selected-cell" : ""} data-preview-block-id={cell.id || undefined}>
+                      {block
+                        ? <PreviewCell block={block} findings={findings} resolutions={resolutions} replacements={replacements} selectedFindingId={selectedFindingId} onSelectFinding={onSelectFinding} />
+                        : cell.text}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </article>
+  );
+}
+
 function DocumentPreview({ findings, resolutions, replacements, selectedFindingId, onSelectFinding, preview, sourceName }) {
   const textFindings = findings.filter((finding) => finding.category === "文字");
   const person = textFindings[0];
@@ -375,6 +458,20 @@ function DocumentPreview({ findings, resolutions, replacements, selectedFindingI
       onSelect={onSelectFinding}
     />
   ) : fallback;
+
+  if (preview?.kind === "xlsx" || preview?.sheets?.length) {
+    return (
+      <SpreadsheetPreview
+        preview={preview}
+        findings={findings}
+        resolutions={resolutions}
+        replacements={replacements}
+        selectedFindingId={selectedFindingId}
+        onSelectFinding={onSelectFinding}
+        sourceName={sourceName}
+      />
+    );
+  }
 
   if (preview?.blocks?.length) {
     const blocks = preview.blocks.filter((block) => block?.id && typeof block.text === "string" && block.text.length > 0);

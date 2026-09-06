@@ -8,6 +8,7 @@ from dataclasses import replace
 
 from local_redactor.models import (
     Category,
+    DocumentModel,
     Finding,
     Modality,
     SourceLocation,
@@ -111,6 +112,44 @@ def location_label(location: SourceLocation) -> str:
         x1, y1, x2, y2 = location.bbox
         pieces.append(f"区域:{x1},{y1},{x2},{y2}")
     return " / ".join(piece for piece in pieces if piece)
+
+
+def expand_duplicate_locations(document: DocumentModel, findings: list[Finding]) -> list[Finding]:
+    """Add locations for every text block that still contains a finding original.
+
+    Detectors can miss unlabeled duplicates (e.g. a bank card that fails Luhn in
+    a table cell after ``account-label`` already caught the labeled paragraph).
+    Expanding locations keeps review and export aligned with forbidden-original
+    rescans.
+    """
+
+    for finding in findings:
+        if finding.category is Category.COMBINATION_RISK:
+            continue
+        original = (finding.original or "").strip()
+        if not original or finding.modality is Modality.IMAGE:
+            continue
+        known_blocks = {
+            location.block_id for location in finding.locations if location.block_id
+        }
+        for block in document.blocks:
+            if block.id in known_blocks:
+                continue
+            if block.location.image_id is not None:
+                continue
+            text = block.text or ""
+            start = text.find(original)
+            if start < 0:
+                continue
+            finding.locations.append(
+                replace(
+                    block.location,
+                    start=start,
+                    end=start + len(original),
+                )
+            )
+            known_blocks.add(block.id)
+    return findings
 
 
 def merge_findings(findings: Iterable[Finding]) -> list[Finding]:

@@ -25,6 +25,7 @@ from .core.common import (
 from .history import HistoryEntry, HistoryStore, HistoryStoreProtocol, new_history_id
 from .models import (
     Category,
+    DocumentKind,
     DocumentModel,
     ExportArtifacts,
     Finding,
@@ -1411,6 +1412,12 @@ class LocalDesktopController:
         chosen.extend(
             block for block in blocks if block.id in referenced_ids and block.id not in chosen_ids
         )
+        if document.kind is DocumentKind.XLSX:
+            chosen = [
+                block
+                for block in blocks
+                if block.block_kind == "cell" and block.location.sheet and block.location.cell
+            ]
         original = "\n".join(block.text for block in chosen)
         transformed = "\n".join(apply_findings_to_text(block, findings) for block in chosen)
         if not original:
@@ -1427,21 +1434,9 @@ class LocalDesktopController:
             original=original[:4000],
             replacement=transformed[:4000],
             preserved_summary=summary,
-            blocks=tuple(
-                {
-                    "id": block.id,
-                    "text": block.text,
-                    "kind": block.block_kind,
-                    "style": {
-                        "styleId": str(block.style.get("style_id", "")),
-                        "alignment": str(block.style.get("alignment", "")),
-                        "numbered": bool(block.style.get("numbered", False)),
-                        "level": str(block.style.get("level", "")),
-                        "bold": bool(block.style.get("bold", False)),
-                    },
-                }
-                for block in chosen
-            ),
+            kind="xlsx" if document.kind is DocumentKind.XLSX else "docx",
+            sheets=tuple(_preview_sheets(chosen)) if document.kind is DocumentKind.XLSX else (),
+            blocks=tuple(_preview_block_dto(block) for block in chosen),
         )
 
     @staticmethod
@@ -1594,6 +1589,86 @@ class LocalDesktopController:
                 return output.getvalue()
         except (OSError, ValueError):
             return b""
+
+
+
+def _preview_block_dto(block) -> dict[str, Any]:
+    location = block.location
+    return {
+        "id": block.id,
+        "text": block.text,
+        "kind": block.block_kind,
+        "sheet": location.sheet,
+        "cell": location.cell,
+        "style": {
+            "styleId": str(block.style.get("style_id", "")),
+            "alignment": str(block.style.get("alignment", "")),
+            "numbered": bool(block.style.get("numbered", False)),
+            "level": str(block.style.get("level", "")),
+            "bold": bool(block.style.get("bold", False)),
+        },
+    }
+
+
+def _split_a1(address: str) -> tuple[str, int] | None:
+    import re
+
+    match = re.fullmatch(r"([A-Za-z]+)(\d+)", str(address).strip())
+    if match is None:
+        return None
+    return match.group(1).upper(), int(match.group(2))
+
+
+def _column_order(label: str) -> int:
+    total = 0
+    for char in label:
+        total = total * 26 + (ord(char.upper()) - 64)
+    return total
+
+
+def _preview_sheets(blocks: Sequence[Any]) -> list[dict[str, Any]]:
+    grouped: dict[str, list[Any]] = defaultdict(list)
+    for block in blocks:
+        sheet = block.location.sheet
+        if not sheet or not block.location.cell:
+            continue
+        grouped[str(sheet)].append(block)
+    sheets: list[dict[str, Any]] = []
+    for sheet_name, items in grouped.items():
+        parsed = []
+        for block in items:
+            split = _split_a1(str(block.location.cell))
+            if split is None:
+                continue
+            column, row = split
+            parsed.append((row, column, block))
+        if not parsed:
+            continue
+        rows_present = sorted({row for row, _column, _block in parsed})
+        columns = sorted({column for _row, column, _block in parsed}, key=_column_order)
+        by_address = {(row, column): block for row, column, block in parsed}
+        sheets.append(
+            {
+                "name": sheet_name,
+                "columns": columns,
+                "rows": [
+                    {
+                        "row": row,
+                        "cells": [
+                            {
+                                "id": by_address[(row, column)].id if (row, column) in by_address else "",
+                                "address": f"{column}{row}",
+                                "column": column,
+                                "text": by_address[(row, column)].text if (row, column) in by_address else "",
+                            }
+                            for column in columns
+                        ],
+                    }
+                    for row in rows_present
+                ],
+            }
+        )
+    return sheets
 
 
 __all__ = ["LocalDesktopController"]

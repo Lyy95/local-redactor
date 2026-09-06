@@ -192,6 +192,21 @@ def _close_cli_review(controller, bundle, args) -> None:
             )
     if args.apply_all or args.keep_rest:
         _remove_all_images(controller)
+        # Visual findings stay PENDING because apply-all/keep-rest skip them.
+        # After whole-image REMOVE, resolve so export is not blocked.
+        for finding in list(bundle.findings):
+            if finding.status is not FindingStatus.PENDING:
+                continue
+            if not _finding_is_visual(finding):
+                continue
+            if finding.category is Category.COMBINATION_RISK:
+                continue
+            controller.resolve_finding(
+                finding.id,
+                FindingStatus.KEEP_FALSE_POSITIVE,
+                finding.suggested_method,
+                ignore_reason="命令行已删除整图，图片内识别项不再保留",
+            )
         if controller._bundle is not None:
             controller._refresh_combination_statuses(controller._bundle.findings)
 

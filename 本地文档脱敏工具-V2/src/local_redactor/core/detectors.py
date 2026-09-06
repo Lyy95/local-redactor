@@ -19,7 +19,7 @@ from local_redactor.models import (
     TransformMethod,
 )
 
-from .common import clone_location, merge_findings, modality_for_block
+from .common import clone_location, expand_duplicate_locations, merge_findings, modality_for_block
 
 Validator = Callable[[re.Match[str]], bool]
 MetadataFactory = Callable[[re.Match[str]], dict[str, Any]]
@@ -663,7 +663,7 @@ class StructuredDetector:
                     metadata={"property_name": key},
                 )
             )
-        return merge_findings(findings)
+        return expand_duplicate_locations(document, merge_findings(findings))
 
     def _detect_block(
         self,
