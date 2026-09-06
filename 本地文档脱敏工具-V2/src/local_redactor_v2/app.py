@@ -27,6 +27,29 @@ def ui_root() -> Path:
     return Path(__file__).resolve().parents[2] / "ui" / "dist" / "client"
 
 
+
+def _prepare_desktop_runtime() -> None:
+    """Reduce WebEngine noise and set macOS Dock label before QApplication."""
+    import os
+
+    os.environ.setdefault(
+        "QTWEBENGINE_CHROMIUM_FLAGS",
+        "--disable-gpu --disable-gpu-compositing --no-sandbox",
+    )
+    if sys.platform != "darwin":
+        return
+    try:
+        from Foundation import NSBundle  # type: ignore
+
+        info = NSBundle.mainBundle().infoDictionary()
+        if info is not None:
+            info["CFBundleName"] = "本地文档脱敏工具"
+            info["CFBundleDisplayName"] = "本地文档脱敏工具"
+    except Exception:
+        # PyObjC optional under plain venv; a real .app Info.plist still wins.
+        return
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--self-test", action="store_true")
@@ -34,8 +57,10 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(sys.argv[1:] if argv is None else argv)
 
     enforce_offline_runtime()
+    _prepare_desktop_runtime()
     app = QApplication.instance() or QApplication(sys.argv)
     app.setApplicationName("本地文档脱敏工具")
+    app.setApplicationDisplayName("本地文档脱敏工具")
     app.setOrganizationName("LocalRedactorV2")
     try:
         verify_bundled_models()

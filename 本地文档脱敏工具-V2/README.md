@@ -22,3 +22,7 @@ Gate 2 已完成：单文件 DOCX 真实检查、复核、手工补充、导出�
 - `python scripts/verify_harness.py`：一次执行 UI 构建、壳自检、测试、Ruff、Mypy、保护基线与发布物校验。
 - `python scripts/verify_release.py`：校验 EXE、Qt WebEngine、本地 UI、ZIP 和 SHA-256。
 - `dist/本地文档脱敏工具-V2/本地文档脱敏工具-V2.exe`：便携目录启动入口。
+
+## macOS 源码运行
+
+见 [docs/MAC.md](docs/MAC.md)。离线 whl/模型在仓库外的 `../../offline-downloads/`（相对本目录）。
