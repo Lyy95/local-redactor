@@ -12,8 +12,29 @@ from PySide6.QtCore import Property, QObject, Signal, Slot
 from PySide6.QtWidgets import QFileDialog, QWidget
 
 from local_redactor.models import Category, Finding, FindingStatus, Modality, ProcessingMode, TransformMethod
+from local_redactor.rule_library import ActionKind, MatchMode, RuleDefinition, RuleKind, RuleLibraryError
 from local_redactor.service import LocalDesktopController
 from local_redactor.ui.controller import ReviewBundle
+
+
+_MATCH_UI = {
+    MatchMode.EXACT: "等于",
+    MatchMode.CONTAINS: "包含",
+    MatchMode.REGEX: "符合格式",
+    MatchMode.ANY_KEYWORD: "包含任一关键词",
+    MatchMode.ALL_KEYWORDS: "同时包含全部关键词",
+    MatchMode.MANUAL: "仅人工判断",
+}
+_MATCH_FROM_UI = {label: mode for mode, label in _MATCH_UI.items()}
+_ACTION_UI = {
+    ActionKind.FIXED_REPLACEMENT: "换成固定代号",
+    ActionKind.MASK_MIDDLE: "保留首尾并加星号",
+    ActionKind.SEQUENCE_CODE: "生成顺序代号",
+    ActionKind.DELETE: "删除",
+}
+_ACTION_FROM_UI = {label: action for action, label in _ACTION_UI.items()}
+_SCOPE_UI = {"text": "正文", "cell": "表格", "ocr": "图片 OCR", "metadata": "页眉页脚", "hidden": "页眉页脚"}
+_SCOPE_FROM_UI = {"正文": "text", "表格": "cell", "页眉页脚": "text", "图片 OCR": "ocr"}
 
 _CATEGORY_LABELS = {
     Category.COMBINATION_RISK: "组合风险",
@@ -75,7 +96,7 @@ class DesktopBridge(QObject):
                 "demoMode": self._demo_mode,
                 "uiRoot": self._ui_root.name,
                 "bridgeVersion": "0.2.0",
-                "capabilities": ["single-docx", "review", "export", "history"],
+                "capabilities": ["single-docx", "review", "export", "history", "rules"],
             }
         )
 
@@ -288,6 +309,62 @@ class DesktopBridge(QObject):
             return self._error(
                 "HISTORY_FAILED", self._safe_message(exc, "无法读取本机历史。"), True
             )
+
+    def _rule_controller(self) -> Any:
+        if self._tasks:
+            return next(iter(self._tasks.values())).controller
+        return self._controller_factory()
+
+    @Slot(result=str)
+    def list_rules(self) -> str:
+        try:
+            library = self._rule_controller().rule_store.load()
+            return self._ok({"revision": library.revision, "rules": [_rule_dto(rule) for rule in library.rules]})
+        except Exception as exc:
+            return self._error("RULES_FAILED", self._safe_message(exc, "无法读取本机规则库。"), True)
+
+    @Slot(str, result=str)
+    def save_rule(self, payload_json: str) -> str:
+        try:
+            payload = json.loads(payload_json or "{}")
+            store = self._rule_controller().rule_store
+            library = store.load()
+            rule = _rule_from_ui(payload)
+            existing = next((item for item in library.rules if item.id == rule.id), None)
+            library = library.update(rule) if existing is not None else library.add(rule)
+            store.save(library)
+            return self._ok({"revision": library.revision, "rules": [_rule_dto(item) for item in library.rules]})
+        except RuleLibraryError as exc:
+            return self._error("RULE_INVALID", str(exc), True)
+        except Exception as exc:
+            return self._error("RULE_SAVE_FAILED", self._safe_message(exc, "无法保存规则。"), True)
+
+    @Slot(str, result=str)
+    def delete_rule(self, rule_id: str) -> str:
+        try:
+            store = self._rule_controller().rule_store
+            library = store.delete(rule_id) if hasattr(store, "delete") else None
+            if library is None:
+                library = store.load().delete(rule_id)
+                store.save(library)
+            return self._ok({"revision": library.revision, "rules": [_rule_dto(item) for item in library.rules]})
+        except KeyError:
+            return self._error("RULE_NOT_FOUND", "该规则已不存在。")
+        except Exception as exc:
+            return self._error("RULE_DELETE_FAILED", self._safe_message(exc, "无法删除规则。"), True)
+
+    @Slot(str, bool, result=str)
+    def set_rule_enabled(self, rule_id: str, enabled: bool) -> str:
+        try:
+            store = self._rule_controller().rule_store
+            library = store.load().set_enabled(rule_id, bool(enabled))
+            store.save(library)
+            return self._ok({"revision": library.revision, "rules": [_rule_dto(item) for item in library.rules]})
+        except KeyError:
+            return self._error("RULE_NOT_FOUND", "该规则已不存在。")
+        except Exception as exc:
+            return self._error("RULE_SAVE_FAILED", self._safe_message(exc, "无法更新规则状态。"), True)
+
 
     @Slot(str, result=str)
     def open_history(self, entry_id: str) -> str:
@@ -505,3 +582,72 @@ class DesktopBridge(QObject):
     @staticmethod
     def _json(value: dict[str, Any]) -> str:
         return json.dumps(value, ensure_ascii=False, separators=(",", ":"))
+
+
+def _rule_dto(rule: RuleDefinition) -> dict[str, Any]:
+    scopes = [_SCOPE_UI.get(scope, scope) for scope in rule.applies_to if scope != "all"]
+    if not scopes:
+        scopes = ["正文", "表格"]
+    unique_scopes = list(dict.fromkeys(scopes))
+    return {
+        "id": rule.id,
+        "type": rule.kind.value,
+        "name": rule.name,
+        "matchMode": _MATCH_UI.get(rule.match_mode, "包含"),
+        "pattern": "、".join(rule.patterns),
+        "action": _ACTION_UI.get(rule.action, "换成固定代号"),
+        "replacement": rule.replacement,
+        "scope": "、".join(unique_scopes),
+        "mandatory": rule.mandatory,
+        "enabled": rule.enabled,
+        "updatedAt": "本机已保存",
+        "builtIn": False,
+        "preset": rule.id.startswith("preset-"),
+        "positiveExample": rule.positive_examples[0] if rule.positive_examples else "",
+        "negativeExample": rule.negative_examples[0] if rule.negative_examples else "",
+    }
+
+
+def _rule_from_ui(payload: dict[str, Any]) -> RuleDefinition:
+    kind = RuleKind.STANDARD if payload.get("type") == "standard" else RuleKind.FIXED
+    match_label = str(payload.get("matchMode") or "包含")
+    action_label = str(payload.get("action") or "换成固定代号")
+    scopes = [
+        _SCOPE_FROM_UI.get(item.strip(), "text")
+        for item in str(payload.get("scope") or "正文、表格").replace(",", "、").split("、")
+        if item.strip()
+    ]
+    patterns = tuple(
+        part.strip()
+        for part in str(payload.get("pattern") or "").replace(",", "、").split("、")
+        if part.strip()
+    )
+    if action_label == "仅人工判断" or match_label == "仅人工判断":
+        match_mode = MatchMode.MANUAL
+        action = ActionKind.FIXED_REPLACEMENT
+        patterns = ()
+    elif action_label == "遮住敏感区域":
+        match_mode = _MATCH_FROM_UI.get(match_label, MatchMode.CONTAINS)
+        action = ActionKind.DELETE
+    else:
+        match_mode = _MATCH_FROM_UI.get(match_label, MatchMode.CONTAINS)
+        action = _ACTION_FROM_UI.get(action_label, ActionKind.FIXED_REPLACEMENT)
+    replacement = "" if action is ActionKind.DELETE else str(payload.get("replacement") or "")
+    return RuleDefinition(
+        id=str(payload.get("id") or uuid4().hex),
+        name=str(payload.get("name") or "").strip(),
+        kind=kind,
+        match_mode=match_mode,
+        patterns=patterns,
+        action=action,
+        replacement=replacement,
+        mandatory=bool(payload.get("mandatory", kind is RuleKind.STANDARD)),
+        enabled=bool(payload.get("enabled", True)),
+        positive_examples=tuple(
+            filter(None, [str(payload.get("positiveExample") or "").strip()])
+        ),
+        negative_examples=tuple(
+            filter(None, [str(payload.get("negativeExample") or "").strip()])
+        ),
+        applies_to=tuple(dict.fromkeys(scopes)) or ("text", "cell"),
+    )

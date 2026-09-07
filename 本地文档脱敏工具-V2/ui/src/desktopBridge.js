@@ -63,4 +63,8 @@ export const desktopBridge = {
   exportTask: (taskId, outputRoot = "") => invoke("export_task", taskId, outputRoot),
   listHistory: () => invoke("list_history"),
   openHistory: (entryId) => invoke("open_history", entryId),
+  listRules: () => invoke("list_rules"),
+  saveRule: (payload) => invoke("save_rule", JSON.stringify(payload)),
+  deleteRule: (ruleId) => invoke("delete_rule", ruleId),
+  setRuleEnabled: (ruleId, enabled) => invoke("set_rule_enabled", ruleId, enabled),
 };

@@ -20,6 +20,7 @@ import {
   X,
 } from "lucide-react";
 
+import { desktopBridge } from "../desktopBridge";
 import "./rules.css";
 
 const TAB_META = {
@@ -237,7 +238,7 @@ function RuleEditorDialog({ editor, returnTarget, onClose, onSave }) {
     const matched = sampleMatchesRule(sample, draft);
     setSampleResult(
       matched
-        ? { ok: true, text: `已命中。原型结果：${simulateTreatment(sample, draft)}` }
+        ? { ok: true, text: `已命中。试算结果：${simulateTreatment(sample, draft)}` }
         : { ok: false, text: "未命中，请检查判断方式、条件和样例。" },
     );
   };
@@ -284,7 +285,7 @@ function RuleEditorDialog({ editor, returnTarget, onClose, onSave }) {
   return (
     <ModalShell
       title={title}
-      description="规则和样例均为本原型中的虚构本机数据，不会读取或上传文件。"
+      description="规则只保存在本机。样例仅用于试规则，不会上传。"
       size="large"
       onClose={onClose}
       footer={(
@@ -582,6 +583,7 @@ export default function RuleLibraryView({
   returnContext = null,
   onReturnToReview,
   onIncrementalApply,
+  persistRules = false,
   onToast,
   activeTab: controlledActiveTab,
   onActiveTabChange,
@@ -648,6 +650,14 @@ export default function RuleLibraryView({
     if (typeof setRules === "function") setRules(nextRules);
   };
 
+  const applyRemote = (result, fallbackMessage) => {
+    if (!result?.ok) {
+      throw new Error(result?.error?.message || fallbackMessage);
+    }
+    commitRules(result.data?.rules || []);
+    return result.data?.rules || [];
+  };
+
   const filteredRules = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase("zh-CN");
     return rules.filter((rule) => {
@@ -691,33 +701,54 @@ export default function RuleLibraryView({
 
   const saveRule = async (savedRule, returnAfterSave) => {
     const exists = rules.some((rule) => rule.id === savedRule.id);
-    const nextRules = exists
-      ? rules.map((rule) => rule.id === savedRule.id ? savedRule : rule)
-      : [savedRule, ...rules];
-    commitRules(nextRules);
-    setEditor(null);
-    notify(exists ? `“${savedRule.name}”已更新。` : `“${savedRule.name}”已新增并启用。`);
-    if (!returnAfterSave) return;
     try {
+      if (persistRules) {
+        applyRemote(await desktopBridge.saveRule(savedRule), "无法保存规则。");
+      } else {
+        commitRules(
+          exists
+            ? rules.map((rule) => rule.id === savedRule.id ? savedRule : rule)
+            : [savedRule, ...rules],
+        );
+      }
+      setEditor(null);
+      notify(exists ? `“${savedRule.name}”已更新并写入本机。` : `“${savedRule.name}”已新增并写入本机。`);
+      if (!returnAfterSave) return;
       await onIncrementalApply?.(savedRule, returnContext);
       notify(`规则已保存并增量应用，正在返回${returnTarget}。`);
       onReturnToReview?.(returnContext, savedRule);
     } catch (error) {
-      notify(error?.message || "规则已保存，但增量应用未完成，请检查后重试。", "error");
+      notify(error?.message || "规则未能保存。", "error");
     }
   };
 
-  const toggleRule = (rule) => {
+  const toggleRule = async (rule) => {
     const enabled = !rule.enabled;
-    commitRules(rules.map((item) => item.id === rule.id ? { ...item, enabled, updatedAt: "刚刚" } : item));
-    notify(`“${rule.name}”已${enabled ? "启用" : "停用"}。`);
+    try {
+      if (persistRules) {
+        applyRemote(await desktopBridge.setRuleEnabled(rule.id, enabled), "无法更新规则状态。");
+      } else {
+        commitRules(rules.map((item) => item.id === rule.id ? { ...item, enabled, updatedAt: "刚刚" } : item));
+      }
+      notify(`“${rule.name}”已${enabled ? "启用" : "停用"}。`);
+    } catch (error) {
+      notify(error?.message || "无法更新规则状态。", "error");
+    }
   };
 
-  const deleteRule = () => {
+  const deleteRule = async () => {
     if (!deleteTarget) return;
-    commitRules(rules.filter((rule) => rule.id !== deleteTarget.id));
-    notify(`“${deleteTarget.name}”已从本机原型规则库删除。`);
-    setDeleteTarget(null);
+    try {
+      if (persistRules) {
+        applyRemote(await desktopBridge.deleteRule(deleteTarget.id), "无法删除规则。");
+      } else {
+        commitRules(rules.filter((rule) => rule.id !== deleteTarget.id));
+      }
+      notify(`“${deleteTarget.name}”已从本机规则库删除。`);
+      setDeleteTarget(null);
+    } catch (error) {
+      notify(error?.message || "无法删除规则。", "error");
+    }
   };
 
   const restoreDefaults = () => {

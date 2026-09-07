@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Protocol
 from uuid import uuid4
 
-from .rule_library import Protector, WindowsDpapiProtector
+from .rule_library import Protector, default_app_data_dir, default_protector
 
 
 class HistoryError(RuntimeError):
@@ -37,13 +37,7 @@ class HistoryStoreProtocol(Protocol):
 
 
 def default_history_store_path() -> Path:
-    local_app_data = os.environ.get("LOCALAPPDATA", "").strip()
-    if not local_app_data:
-        raise HistoryError("无法确定当前 Windows 用户的本地应用数据目录")
-    root = Path(local_app_data)
-    if not root.is_absolute():
-        raise HistoryError("当前 Windows 用户的本地应用数据目录无效")
-    return root / "LocalRedactor" / "本地文档脱敏工具" / "history.dat"
+    return default_app_data_dir() / "history.dat"
 
 
 class HistoryStore:
@@ -55,7 +49,7 @@ class HistoryStore:
         protector: Protector | None = None,
     ) -> None:
         self.path = Path(path) if path is not None else default_history_store_path()
-        self.protector = protector or WindowsDpapiProtector()
+        self.protector = protector or default_protector()
 
     def load(self) -> tuple[HistoryEntry, ...]:
         if not self.path.exists():

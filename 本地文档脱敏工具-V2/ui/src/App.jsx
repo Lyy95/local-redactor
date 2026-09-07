@@ -553,6 +553,10 @@ export function App() {
       if (!active) return;
       if (historyResult?.ok) setHistory(historyRows(historyResult.data?.entries));
       else showToast(historyResult?.error?.message || "无法读取本机历史", "error");
+      const rulesResult = await desktopBridge.listRules();
+      if (!active) return;
+      if (rulesResult?.ok) setRules(rulesResult.data?.rules || []);
+      else showToast(rulesResult?.error?.message || "无法读取本机规则库", "error");
     };
     initializeDesktop();
     return () => { active = false; };
@@ -1410,6 +1414,7 @@ export function App() {
             returnContext={returnContext}
             onReturnToReview={returnFromRule}
             onIncrementalApply={(updatedRule) => { updateFindingRule(updatedRule); showToast("新规则已增量应用到当前任务"); }}
+            persistRules={!demoMode && desktopReady}
             onToast={showToast}
           />
         )}

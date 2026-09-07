@@ -5,6 +5,7 @@ import csv
 import ctypes
 import json
 import os
+import sys
 import re
 import tempfile
 import threading
@@ -795,16 +796,64 @@ class WindowsDpapiProtector:
         return buffer, cls._DataBlob(len(value), pointer)
 
 
-def default_rule_store_path() -> Path:
-    """Return the private per-user Windows location for `rules.dat`."""
+def default_app_data_dir() -> Path:
+    """Per-user application data directory on Windows, macOS and Linux."""
 
-    local_app_data = os.environ.get("LOCALAPPDATA", "").strip()
-    if not local_app_data:
-        raise RuleStoreError("无法确定当前 Windows 用户的本地应用数据目录")
-    local_root = Path(local_app_data)
-    if not local_root.is_absolute():
-        raise RuleStoreError("当前 Windows 用户的本地应用数据目录无效")
-    return local_root / "LocalRedactor" / "本地文档脱敏工具" / "rules.dat"
+    if os.name == "nt":
+        local_app_data = os.environ.get("LOCALAPPDATA", "").strip()
+        if not local_app_data:
+            raise RuleStoreError("无法确定当前 Windows 用户的本地应用数据目录")
+        root = Path(local_app_data)
+    elif sys.platform == "darwin":
+        root = Path.home() / "Library" / "Application Support"
+    else:
+        root = Path(os.environ.get("XDG_DATA_HOME", Path.home() / ".local" / "share"))
+    if not root.is_absolute():
+        raise RuleStoreError("当前用户的本地应用数据目录无效")
+    path = root / "LocalRedactor" / "本地文档脱敏工具"
+    path.mkdir(parents=True, exist_ok=True)
+    return path
+
+
+def default_rule_store_path() -> Path:
+    return default_app_data_dir() / "rules.dat"
+
+
+class FernetFileProtector:
+    """Local file-key protector for macOS and Linux.
+
+    The key stays in the per-user app data directory with 0o600 permissions.
+    This is not Keychain/DPAPI; it only prevents casual plaintext on disk.
+    """
+
+    def __init__(self, key_path: Path | None = None) -> None:
+        self.key_path = Path(key_path) if key_path is not None else default_app_data_dir() / "store.key"
+        self._fernet = self._load_or_create()
+
+    def _load_or_create(self):
+        from cryptography.fernet import Fernet
+
+        if self.key_path.is_file():
+            key = self.key_path.read_bytes().strip()
+        else:
+            self.key_path.parent.mkdir(parents=True, exist_ok=True)
+            key = Fernet.generate_key()
+            self.key_path.write_bytes(key)
+            with contextlib.suppress(OSError):
+                os.chmod(self.key_path, 0o600)
+        return Fernet(key)
+
+    def protect(self, plaintext: bytes) -> bytes:
+        return self._fernet.encrypt(plaintext)
+
+    def unprotect(self, ciphertext: bytes) -> bytes:
+        return self._fernet.decrypt(ciphertext)
+
+
+def default_protector() -> Protector:
+    if os.name == "nt":
+        return WindowsDpapiProtector()
+    return FernetFileProtector()
 
 
 def is_preset_rule(rule: RuleDefinition) -> bool:
@@ -1178,7 +1227,7 @@ class RuleStore:
         include_presets: bool = False,
     ) -> None:
         self.path = default_rule_store_path() if path is None else Path(path)
-        self.protector = protector or WindowsDpapiProtector()
+        self.protector = protector or default_protector()
         self.include_presets = include_presets
 
     def load(self) -> RuleLibrary:
