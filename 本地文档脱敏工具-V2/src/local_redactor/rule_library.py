@@ -1346,17 +1346,23 @@ class RuleImportResult:
     replaced_existing_count: int = 0
 
 
-def import_rules(
-    path: Path,
-    library: RuleLibrary,
-    *,
-    conflict_policy: ConflictPolicy = "error",
-) -> RuleImportResult:
-    """Read a local CSV/XLSX rule sheet without evaluating formulas.
+@dataclass(frozen=True, slots=True)
+class RuleImportPreviewItem:
+    status: Literal["new", "duplicate", "conflict"]
+    imported: RuleDefinition
+    existing: RuleDefinition | None = None
 
-    The function returns a new immutable library. It never mutates or saves the
-    existing library, so any conflict or malformed row aborts the whole import.
-    """
+
+@dataclass(frozen=True, slots=True)
+class RuleImportPreview:
+    items: tuple[RuleImportPreviewItem, ...]
+    new_count: int
+    duplicate_count: int
+    conflict_count: int
+
+
+def load_imported_rules(path: Path) -> tuple[RuleDefinition, ...]:
+    """Read a local CSV/XLSX rule sheet without evaluating formulas."""
 
     source = Path(path)
     try:
@@ -1378,12 +1384,93 @@ def import_rules(
     imported = tuple(_rule_from_import_row(row, index) for index, row in enumerate(rows, 2))
     if not imported:
         raise RuleImportError("规则导入文件没有数据行")
+    return imported
+
+
+def import_rules(
+    path: Path,
+    library: RuleLibrary,
+    *,
+    conflict_policy: ConflictPolicy = "error",
+) -> RuleImportResult:
+    """Read a local CSV/XLSX rule sheet without evaluating formulas.
+
+    The function returns a new immutable library. It never mutates or saves the
+    existing library, so any conflict or malformed row aborts the whole import.
+    """
+
+    imported = load_imported_rules(path)
     if len(imported) + len(library.rules) > MAX_RULES:
         raise RuleImportError(f"导入后规则总数不能超过 {MAX_RULES}")
     return merge_imported_rules(
         library,
         imported,
         conflict_policy=conflict_policy,
+    )
+
+
+def preview_import_rules(path: Path, library: RuleLibrary) -> RuleImportPreview:
+    """Classify import rows without writing to the rule store."""
+
+    return classify_imported_rules(library, load_imported_rules(path))
+
+
+def classify_imported_rules(
+    library: RuleLibrary,
+    imported: Sequence[RuleDefinition],
+) -> RuleImportPreview:
+    """Mirror merge classification: exact duplicates skip, same source/different effect conflicts."""
+
+    existing_by_duplicate = {item.duplicate_signature(): item for item in library.rules}
+    existing_by_source: dict[tuple[object, ...], list[RuleDefinition]] = {}
+    for item in library.rules:
+        existing_by_source.setdefault(item.source_signature(), []).append(item)
+
+    imported_effects: dict[tuple[object, ...], tuple[object, ...]] = {}
+    items: list[RuleImportPreviewItem] = []
+    new_count = 0
+    duplicate_count = 0
+    conflict_count = 0
+
+    for rule in imported:
+        source = rule.source_signature()
+        effect = rule.effect_signature()
+        prior_effect = imported_effects.get(source)
+        if prior_effect is not None and prior_effect != effect:
+            raise RuleImportError("导入文件内部存在同一命中条件、不同处理结果的规则")
+        imported_effects[source] = effect
+
+        duplicate = existing_by_duplicate.get(rule.duplicate_signature())
+        if duplicate is not None:
+            items.append(
+                RuleImportPreviewItem(status="duplicate", imported=rule, existing=duplicate)
+            )
+            duplicate_count += 1
+            continue
+
+        same_source = existing_by_source.get(source, [])
+        conflicting = [
+            item for item in same_source if item.effect_signature() != effect
+        ]
+        if conflicting:
+            items.append(
+                RuleImportPreviewItem(
+                    status="conflict",
+                    imported=rule,
+                    existing=conflicting[0],
+                )
+            )
+            conflict_count += 1
+            continue
+
+        items.append(RuleImportPreviewItem(status="new", imported=rule, existing=None))
+        new_count += 1
+
+    return RuleImportPreview(
+        items=tuple(items),
+        new_count=new_count,
+        duplicate_count=duplicate_count,
+        conflict_count=conflict_count,
     )
 
 
@@ -1933,7 +2020,10 @@ __all__ = [
     "RuleApplication",
     "RuleConflictError",
     "RuleDefinition",
+    "RuleImportConflictError",
     "RuleImportError",
+    "RuleImportPreview",
+    "RuleImportPreviewItem",
     "RuleImportResult",
     "RuleKind",
     "RuleLibrary",
@@ -1948,8 +2038,11 @@ __all__ = [
     "default_industry_rules",
     "default_standard_rules",
     "default_rule_store_path",
+    "classify_imported_rules",
     "import_rules",
     "is_preset_rule",
+    "load_imported_rules",
     "merge_imported_rules",
+    "preview_import_rules",
     "restore_default_rules",
 ]

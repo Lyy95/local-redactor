@@ -67,4 +67,7 @@ export const desktopBridge = {
   saveRule: (payload) => invoke("save_rule", JSON.stringify(payload)),
   deleteRule: (ruleId) => invoke("delete_rule", ruleId),
   setRuleEnabled: (ruleId, enabled) => invoke("set_rule_enabled", ruleId, enabled),
+  chooseRuleImportFile: () => invoke("choose_rule_import_file"),
+  previewRuleImport: (importId) => invoke("preview_rule_import", importId),
+  commitRuleImport: (importId, conflictPolicy) => invoke("commit_rule_import", importId, conflictPolicy),
 };

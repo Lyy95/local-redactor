@@ -449,40 +449,47 @@ function TestRuleDialog({ rule, onClose }) {
   );
 }
 
-function ImportDialog({ conflictRule, stage, onStage, onCancel, onChoose }) {
-  const importedConflict = conflictRule
-    ? {
-        ...conflictRule,
-        replacement: conflictRule.replacement === "星河合作机构" ? "辰光合作机构" : "星河合作机构",
-        updatedAt: "刚刚导入",
-      }
-    : null;
+function ImportDialog({ preview, stage, onStage, onCancel, onChoose, busy = false }) {
+  const conflicts = preview?.conflicts || [];
+  const duplicates = preview?.duplicates || [];
+  const newRules = preview?.newRules || [];
+  const conflictCount = preview?.conflictCount ?? conflicts.length;
+  const firstConflict = conflicts[0] || null;
+  const fileLabel = preview?.name || "虚构规则导入表.xlsx";
+  const totalShown = (preview?.newCount ?? newRules.length)
+    + (preview?.duplicateCount ?? duplicates.length)
+    + conflictCount;
 
-  if (stage === "conflict" && importedConflict) {
+  if (stage === "conflict" && firstConflict) {
+    const existing = firstConflict.existing;
+    const imported = firstConflict.imported;
     return (
       <ModalShell
-        title="发现 1 条冲突规则"
-        description="同一原词对应了不同结果。请选择本次导入方式，系统不会静默覆盖。"
+        title={`发现 ${conflictCount} 条冲突规则`}
+        description="同一命中条件对应了不同处理结果。请选择本次导入方式，系统不会静默覆盖。修改后的规则会在下次扫描时生效。"
         size="large"
         onClose={onCancel}
       >
         <div className="conflict-compare">
           <section>
             <span>本机现有规则</span>
-            <h3>{conflictRule.name}</h3>
-            <dl><div><dt>原词</dt><dd>{conflictRule.pattern}</dd></div><div><dt>替换为</dt><dd>{conflictRule.replacement}</dd></div></dl>
+            <h3>{existing?.name || "现有规则"}</h3>
+            <dl><div><dt>原词</dt><dd>{existing?.pattern || "—"}</dd></div><div><dt>替换为</dt><dd>{existing?.replacement || "—"}</dd></div></dl>
           </section>
           <ChevronRight size={22} aria-hidden="true" />
           <section className="imported">
             <span>导入文件中的规则</span>
-            <h3>{importedConflict.name}</h3>
-            <dl><div><dt>原词</dt><dd>{importedConflict.pattern}</dd></div><div><dt>替换为</dt><dd>{importedConflict.replacement}</dd></div></dl>
+            <h3>{imported?.name || "导入规则"}</h3>
+            <dl><div><dt>原词</dt><dd>{imported?.pattern || "—"}</dd></div><div><dt>替换为</dt><dd>{imported?.replacement || "—"}</dd></div></dl>
           </section>
         </div>
+        {conflictCount > 1 && (
+          <p className="import-note"><Info size={16} aria-hidden="true" />共 {conflictCount} 条冲突将按同一策略处理（保留现有或全部采用导入）。</p>
+        )}
         <div className="conflict-actions">
-          <button type="button" className="rule-button secondary" onClick={() => onChoose("keep", importedConflict)}>保留现有规则</button>
-          <button type="button" className="rule-button primary" onClick={() => onChoose("import", importedConflict)}>采用导入规则</button>
-          <button type="button" className="rule-button text" onClick={onCancel}>取消导入</button>
+          <button type="button" className="rule-button secondary" disabled={busy} onClick={() => onChoose("keep")}>保留现有规则</button>
+          <button type="button" className="rule-button primary" disabled={busy} onClick={() => onChoose("import")}>采用导入规则</button>
+          <button type="button" className="rule-button text" disabled={busy} onClick={onCancel}>取消导入</button>
         </div>
       </ModalShell>
     );
@@ -491,26 +498,62 @@ function ImportDialog({ conflictRule, stage, onStage, onCancel, onChoose }) {
   return (
     <ModalShell
       title="导入规则预览"
-      description="原型使用两条虚构规则展示导入结果，不读取真实 CSV 或 XLSX。"
+      description={preview?.live
+        ? "以下结果来自本机 CSV / XLSX。完整重复项会自动跳过；冲突项需要你确认后才会写入。"
+        : "原型使用虚构规则展示导入结果，不读取真实 CSV 或 XLSX。"}
       size="large"
       onClose={onCancel}
       footer={(
         <>
-          <button type="button" className="rule-button secondary" onClick={onCancel}>取消导入</button>
-          <button type="button" className="rule-button primary" onClick={() => conflictRule ? onStage("conflict") : onChoose("keep", null)}>
+          <button type="button" className="rule-button secondary" disabled={busy} onClick={onCancel}>取消导入</button>
+          <button
+            type="button"
+            className="rule-button primary"
+            disabled={busy}
+            onClick={() => (conflictCount > 0 ? onStage("conflict") : onChoose("keep"))}
+          >
             继续导入
           </button>
         </>
       )}
     >
-      <div className="prototype-file-row"><FileCheck2 size={22} aria-hidden="true" /><span><b>虚构规则导入表.xlsx</b><small>本机虚构文件 · 2 条规则</small></span></div>
+      <div className="prototype-file-row"><FileCheck2 size={22} aria-hidden="true" /><span><b>{fileLabel}</b><small>本机文件 · {totalShown} 条规则</small></span></div>
       <div className="import-preview-list">
-        {conflictRule && (
-          <article className="conflict"><AlertTriangle size={18} aria-hidden="true" /><div><h3>{conflictRule.name}</h3><p>原词“{conflictRule.pattern}”已存在，但替换结果不同。</p></div><span>需要选择</span></article>
+        {conflicts.map((item, index) => (
+          <article className="conflict" key={`conflict-${item.existing?.id || index}`}>
+            <AlertTriangle size={18} aria-hidden="true" />
+            <div>
+              <h3>{item.existing?.name || item.imported?.name || "冲突规则"}</h3>
+              <p>原词“{item.existing?.pattern || item.imported?.pattern || ""}”已存在，但处理结果不同。</p>
+            </div>
+            <span>需要选择</span>
+          </article>
+        ))}
+        {duplicates.map((item, index) => (
+          <article key={`dup-${item.existing?.id || index}`}>
+            <Info size={18} aria-hidden="true" />
+            <div>
+              <h3>{item.imported?.name || "重复规则"}</h3>
+              <p>{item.imported?.pattern || ""} → {item.imported?.replacement || ""}</p>
+            </div>
+            <span>将跳过</span>
+          </article>
+        ))}
+        {newRules.map((rule) => (
+          <article key={rule.id || rule.name}>
+            <Check size={18} aria-hidden="true" />
+            <div>
+              <h3>{rule.name}</h3>
+              <p>{rule.pattern} → {rule.replacement}</p>
+            </div>
+            <span>可新增</span>
+          </article>
+        ))}
+        {!conflicts.length && !duplicates.length && !newRules.length && (
+          <article><Info size={18} aria-hidden="true" /><div><h3>没有可导入的规则</h3><p>文件可能全是重复项，或没有有效数据行。</p></div><span>无变化</span></article>
         )}
-        <article><Check size={18} aria-hidden="true" /><div><h3>{IMPORT_NEW_RULE.name}</h3><p>{IMPORT_NEW_RULE.pattern} → {IMPORT_NEW_RULE.replacement}</p></div><span>可新增</span></article>
       </div>
-      <p className="import-note"><Info size={16} aria-hidden="true" />完整重复项会自动跳过；冲突项必须由你选择。</p>
+      <p className="import-note"><Info size={16} aria-hidden="true" />完整重复项会自动跳过；冲突项必须由你选择。导入结果会在下次扫描时生效。</p>
     </ModalShell>
   );
 }
@@ -603,6 +646,8 @@ export default function RuleLibraryView({
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [restoreOpen, setRestoreOpen] = useState(false);
   const [importStage, setImportStage] = useState(null);
+  const [importPreview, setImportPreview] = useState(null);
+  const [importBusy, setImportBusy] = useState(false);
   const [feedback, setFeedback] = useState(null);
   const rowRefs = useRef(new Map());
   const returnTarget = formatReturnTarget(returnContext);
@@ -636,6 +681,8 @@ export default function RuleLibraryView({
       setDeleteTarget(null);
       setRestoreOpen(false);
       setImportStage(null);
+      setImportPreview(null);
+      setImportBusy(false);
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
@@ -759,20 +806,112 @@ export default function RuleLibraryView({
     setRestoreOpen(false);
   };
 
-  const conflictRule = rules.find((rule) => rule.type === "fixed") || null;
+  const buildPrototypePreview = () => {
+    const conflictRule = rules.find((rule) => rule.type === "fixed") || null;
+    const importedConflict = conflictRule
+      ? {
+          ...conflictRule,
+          replacement: conflictRule.replacement === "星河合作机构" ? "辰光合作机构" : "星河合作机构",
+          updatedAt: "刚刚导入",
+        }
+      : null;
+    return {
+      live: false,
+      name: "虚构规则导入表.xlsx",
+      importId: "",
+      newCount: 1,
+      duplicateCount: 0,
+      conflictCount: conflictRule ? 1 : 0,
+      newRules: [IMPORT_NEW_RULE],
+      duplicates: [],
+      conflicts: conflictRule && importedConflict
+        ? [{ existing: conflictRule, imported: importedConflict }]
+        : [],
+    };
+  };
 
-  const finishImport = (policy, importedConflict) => {
-    const newAlreadyExists = rules.some((rule) => rule.id === IMPORT_NEW_RULE.id);
+  const startImport = async () => {
+    if (!persistRules) {
+      setImportPreview(buildPrototypePreview());
+      setImportStage("preview");
+      return;
+    }
+    try {
+      setImportBusy(true);
+      const chosen = await desktopBridge.chooseRuleImportFile();
+      if (!chosen?.ok) {
+        throw new Error(chosen?.error?.message || "无法选择规则导入文件。");
+      }
+      if (chosen.data?.cancelled) {
+        notify("已取消导入，现有规则没有变化。", "info");
+        return;
+      }
+      const preview = await desktopBridge.previewRuleImport(chosen.data.importId);
+      if (!preview?.ok) {
+        throw new Error(preview?.error?.message || "无法预览规则导入。");
+      }
+      setImportPreview({
+        live: true,
+        importId: chosen.data.importId,
+        name: chosen.data.name || preview.data?.name || "规则导入文件",
+        ...preview.data,
+      });
+      setImportStage("preview");
+    } catch (error) {
+      notify(error?.message || "无法开始规则导入。", "error");
+      setImportStage(null);
+      setImportPreview(null);
+    } finally {
+      setImportBusy(false);
+    }
+  };
+
+  const finishImport = async (policy) => {
+    const preview = importPreview || buildPrototypePreview();
+    const conflictPolicy = policy === "import" ? "use_imported" : "keep_existing";
+    if (persistRules && preview.live && preview.importId) {
+      try {
+        setImportBusy(true);
+        const result = await desktopBridge.commitRuleImport(preview.importId, conflictPolicy);
+        if (!result?.ok) {
+          throw new Error(result?.error?.message || "无法完成规则导入。");
+        }
+        applyRemote(result, "无法完成规则导入。");
+        setImportStage(null);
+        setImportPreview(null);
+        const added = result.data?.addedCount ?? 0;
+        const kept = result.data?.keptExistingCount ?? 0;
+        const replaced = result.data?.replacedExistingCount ?? 0;
+        const skipped = result.data?.skippedDuplicateCount ?? 0;
+        notify(`导入完成：新增 ${added} 条，跳过重复 ${skipped} 条，${policy === "keep" ? `保留现有 ${kept} 条` : `采用导入 ${replaced} 条`}。下次扫描将使用更新后的规则。`);
+      } catch (error) {
+        notify(error?.message || "无法完成规则导入。", "error");
+      } finally {
+        setImportBusy(false);
+      }
+      return;
+    }
+
+    const conflicts = preview.conflicts || [];
+    const newRules = preview.newRules || [];
     let nextRules = [...rules];
     let replaced = 0;
-    if (policy === "import" && conflictRule && importedConflict) {
-      nextRules = nextRules.map((rule) => rule.id === conflictRule.id ? { ...importedConflict, id: conflictRule.id } : rule);
-      replaced = 1;
+    if (policy === "import") {
+      conflicts.forEach((item) => {
+        if (!item?.existing?.id || !item?.imported) return;
+        nextRules = nextRules.map((rule) => (
+          rule.id === item.existing.id ? { ...item.imported, id: item.existing.id, updatedAt: "刚刚导入" } : rule
+        ));
+        replaced += 1;
+      });
     }
-    if (!newAlreadyExists) nextRules = [IMPORT_NEW_RULE, ...nextRules];
+    const existingIds = new Set(nextRules.map((rule) => rule.id));
+    const toAdd = newRules.filter((rule) => rule?.id && !existingIds.has(rule.id));
+    nextRules = [...toAdd, ...nextRules];
     commitRules(nextRules);
     setImportStage(null);
-    notify(`导入完成：新增 ${newAlreadyExists ? 0 : 1} 条，${policy === "keep" ? "保留现有 1 条" : `采用导入 ${replaced} 条`}。`);
+    setImportPreview(null);
+    notify(`导入完成：新增 ${toAdd.length} 条，${policy === "keep" ? `保留现有 ${conflicts.length} 条` : `采用导入 ${replaced} 条`}。`);
   };
 
   const applyAndReturn = async () => {
@@ -875,7 +1014,7 @@ export default function RuleLibraryView({
         )}
         <div className="rule-toolbar-actions">
           {!isBuiltin && <button type="button" className="rule-button primary" onClick={() => openAdd(false)}><Plus size={17} aria-hidden="true" />新建规则</button>}
-          {!isBuiltin && <button type="button" className="rule-button secondary" onClick={() => setImportStage("preview")}><Upload size={17} aria-hidden="true" />导入规则</button>}
+          {!isBuiltin && <button type="button" className="rule-button secondary" disabled={importBusy} onClick={startImport}><Upload size={17} aria-hidden="true" />导入规则</button>}
           {!isBuiltin && <button type="button" className="rule-button secondary" onClick={() => notify("空白模板原型反馈已生成；本交互原型不会下载或写入真实文件。", "info")}><Download size={17} aria-hidden="true" />下载模板</button>}
           {!isBuiltin && <button type="button" className="rule-button text" onClick={() => setRestoreOpen(true)}><RotateCcw size={17} aria-hidden="true" />恢复默认</button>}
         </div>
@@ -950,12 +1089,13 @@ export default function RuleLibraryView({
           onConfirm={restoreDefaults}
         />
       )}
-      {importStage && (
+      {importStage && importPreview && (
         <ImportDialog
-          conflictRule={conflictRule}
+          preview={importPreview}
           stage={importStage}
+          busy={importBusy}
           onStage={setImportStage}
-          onCancel={() => { setImportStage(null); notify("已取消导入，现有规则没有变化。", "info"); }}
+          onCancel={() => { setImportStage(null); setImportPreview(null); setImportBusy(false); notify("已取消导入，现有规则没有变化。", "info"); }}
           onChoose={finishImport}
         />
       )}

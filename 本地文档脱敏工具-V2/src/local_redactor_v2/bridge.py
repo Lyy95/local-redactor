@@ -12,7 +12,17 @@ from PySide6.QtCore import Property, QObject, Signal, Slot
 from PySide6.QtWidgets import QFileDialog, QWidget
 
 from local_redactor.models import Category, Finding, FindingStatus, Modality, ProcessingMode, TransformMethod
-from local_redactor.rule_library import ActionKind, MatchMode, RuleDefinition, RuleKind, RuleLibraryError
+from local_redactor.rule_library import (
+    ActionKind,
+    MatchMode,
+    RuleDefinition,
+    RuleImportConflictError,
+    RuleImportError,
+    RuleKind,
+    RuleLibraryError,
+    import_rules,
+    preview_import_rules,
+)
 from local_redactor.service import LocalDesktopController
 from local_redactor.ui.controller import ReviewBundle
 
@@ -80,6 +90,7 @@ class DesktopBridge(QObject):
         self._folder_selector = folder_selector
         self._demo_mode = demo_mode
         self._sources: dict[str, Path] = {}
+        self._import_files: dict[str, Path] = {}
         self._tasks: dict[str, TaskRecord] = {}
 
     @Property(str, constant=True)
@@ -365,6 +376,155 @@ class DesktopBridge(QObject):
         except Exception as exc:
             return self._error("RULE_SAVE_FAILED", self._safe_message(exc, "无法更新规则状态。"), True)
 
+    @Slot(result=str)
+    def choose_rule_import_file(self) -> str:
+        try:
+            # Keep DOCX task picker separate from rule-sheet picker.
+            path = self._native_choose_rule_import_file()
+            if path is None:
+                return self._ok({"cancelled": True})
+            path = Path(path).resolve()
+            suffix = path.suffix.casefold()
+            if suffix not in {".csv", ".xlsx"}:
+                return self._error("UNSUPPORTED_FILE", "规则导入只支持 .csv 和 .xlsx。")
+            if not path.is_file():
+                return self._error(
+                    "FILE_NOT_FOUND", "所选文件已不存在，请重新选择。", True, "choose_rule_import_file"
+                )
+            import_id = uuid4().hex
+            self._import_files[import_id] = path
+            return self._ok(
+                {
+                    "cancelled": False,
+                    "importId": import_id,
+                    "name": path.name,
+                    "type": suffix[1:].upper(),
+                    "size": self._display_size(path.stat().st_size),
+                }
+            )
+        except OSError:
+            return self._error(
+                "FILE_ACCESS_ERROR", "无法读取所选文件，请检查权限后重试。", True, "choose_rule_import_file"
+            )
+
+    def _native_choose_rule_import_file(self) -> Path | None:
+        parent_object = self.parent()
+        parent = parent_object if isinstance(parent_object, QWidget) else None
+        selected, _ = QFileDialog.getOpenFileName(
+            parent,
+            "选择规则导入文件",
+            "",
+            "规则表 (*.csv *.xlsx);;CSV (*.csv);;Excel 工作簿 (*.xlsx)",
+        )
+        return Path(selected) if selected else None
+
+    def _resolve_import_path(self, import_ref: str) -> Path | None:
+        key = str(import_ref or "").strip()
+        if not key:
+            return None
+        cached = self._import_files.get(key)
+        if cached is not None:
+            return cached
+        candidate = Path(key)
+        return candidate if candidate.is_file() else None
+
+    @Slot(str, result=str)
+    def preview_rule_import(self, import_id: str) -> str:
+        try:
+            path = self._resolve_import_path(import_id)
+            if path is None:
+                return self._error(
+                    "IMPORT_EXPIRED", "导入文件选择已失效，请重新选择。", True, "choose_rule_import_file"
+                )
+            library = self._rule_controller().rule_store.load()
+            preview = preview_import_rules(path, library)
+            return self._ok(
+                {
+                    "importId": import_id if import_id in self._import_files else "",
+                    "name": path.name,
+                    "newCount": preview.new_count,
+                    "duplicateCount": preview.duplicate_count,
+                    "conflictCount": preview.conflict_count,
+                    "newRules": [_rule_dto(item.imported) for item in preview.items if item.status == "new"],
+                    "duplicates": [
+                        {
+                            "imported": _rule_dto(item.imported),
+                            "existing": _rule_dto(item.existing) if item.existing else None,
+                        }
+                        for item in preview.items
+                        if item.status == "duplicate"
+                    ],
+                    "conflicts": [
+                        {
+                            "imported": _rule_dto(item.imported),
+                            "existing": _rule_dto(item.existing) if item.existing else None,
+                        }
+                        for item in preview.items
+                        if item.status == "conflict"
+                    ],
+                }
+            )
+        except RuleImportError as exc:
+            return self._error("RULE_IMPORT_INVALID", str(exc), True)
+        except Exception as exc:
+            return self._error(
+                "RULE_IMPORT_FAILED", self._safe_message(exc, "无法预览规则导入。"), True
+            )
+
+    @Slot(str, str, result=str)
+    def commit_rule_import(self, import_id: str, conflict_policy: str) -> str:
+        try:
+            path = self._resolve_import_path(import_id)
+            if path is None:
+                return self._error(
+                    "IMPORT_EXPIRED", "导入文件选择已失效，请重新选择。", True, "choose_rule_import_file"
+                )
+            policy = str(conflict_policy or "error").strip()
+            if policy not in {"error", "keep_existing", "use_imported"}:
+                return self._error("INVALID_REQUEST", "导入冲突处理方式无效。")
+            store = self._rule_controller().rule_store
+            library = store.load()
+            result = import_rules(path, library, conflict_policy=policy)  # type: ignore[arg-type]
+            store.save(result.library)
+            self._import_files.pop(import_id, None)
+            return self._ok(
+                {
+                    "revision": result.library.revision,
+                    "rules": [_rule_dto(item) for item in result.library.rules],
+                    "addedCount": result.added_count,
+                    "skippedDuplicateCount": result.skipped_duplicate_count,
+                    "keptExistingCount": result.kept_existing_count,
+                    "replacedExistingCount": result.replaced_existing_count,
+                }
+            )
+        except RuleImportConflictError as exc:
+            conflicts = [
+                {
+                    "imported": _rule_dto(imported),
+                    "existing": _rule_dto(existing),
+                }
+                for existing, imported in exc.conflicts
+            ]
+            return self._json(
+                {
+                    "ok": False,
+                    "error": self._error_object(
+                        "RULE_IMPORT_CONFLICT",
+                        str(exc),
+                        True,
+                        "resolve_import_conflict",
+                    ),
+                    "data": {"conflicts": conflicts, "conflictCount": len(conflicts)},
+                }
+            )
+        except RuleImportError as exc:
+            return self._error("RULE_IMPORT_INVALID", str(exc), True)
+        except RuleLibraryError as exc:
+            return self._error("RULE_INVALID", str(exc), True)
+        except Exception as exc:
+            return self._error(
+                "RULE_IMPORT_FAILED", self._safe_message(exc, "无法完成规则导入。"), True
+            )
 
     @Slot(str, result=str)
     def open_history(self, entry_id: str) -> str:
