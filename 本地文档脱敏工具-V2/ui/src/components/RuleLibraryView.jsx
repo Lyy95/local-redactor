@@ -197,11 +197,12 @@ function SwitchButton({ enabled, onClick }) {
   );
 }
 
-function RuleEditorDialog({ editor, returnTarget, onClose, onSave }) {
+function RuleEditorDialog({ editor, returnTarget, onClose, onSave, persistRules = false }) {
   const [draft, setDraft] = useState(() => toDraft(editor.rule));
   const [error, setError] = useState("");
   const [sample, setSample] = useState(editor.rule.positiveExample || editor.rule.pattern || "");
   const [sampleResult, setSampleResult] = useState(null);
+  const [testing, setTesting] = useState(false);
 
   const update = (key, value) => {
     setDraft((current) => ({ ...current, [key]: value }));
@@ -230,9 +231,21 @@ function RuleEditorDialog({ editor, returnTarget, onClose, onSave }) {
     setError("");
   };
 
-  const testDraft = () => {
+  const testDraft = async () => {
     if (!sample.trim()) {
       setSampleResult({ ok: false, text: "请先输入一段虚构样例。" });
+      return;
+    }
+    if (persistRules) {
+      setTesting(true);
+      try {
+        const data = await runEngineRuleTest(draft, sample);
+        setSampleResult(formatEngineTestResult(data, draft, { editor: true }));
+      } catch (error) {
+        setSampleResult({ ok: false, text: error?.message || "试跑失败，请检查规则配置。" });
+      } finally {
+        setTesting(false);
+      }
       return;
     }
     const matched = sampleMatchesRule(sample, draft);
@@ -368,11 +381,11 @@ function RuleEditorDialog({ editor, returnTarget, onClose, onSave }) {
       <section className="editor-test-panel" aria-label="保存前测试规则">
         <div>
           <FlaskConical size={18} aria-hidden="true" />
-          <span><b>保存前测试</b><small>只对当前虚构样例测试，不读取文件。</small></span>
+          <span><b>保存前测试</b><small>{persistRules ? "由本机规则引擎试跑当前虚构样例，不读取文件。" : "只对当前虚构样例测试，不读取文件。"}</small></span>
         </div>
         <div className="editor-test-input">
           <input value={sample} onChange={(event) => setSample(event.target.value)} placeholder="输入一段虚构样例" />
-          <button type="button" className="rule-button secondary" onClick={testDraft}>测试</button>
+          <button type="button" className="rule-button secondary" onClick={testDraft} disabled={testing}>{testing ? "试跑中…" : "测试"}</button>
         </div>
         {sampleResult && <p className={sampleResult.ok ? "success" : "warning"}>{sampleResult.text}</p>}
       </section>
@@ -407,13 +420,72 @@ function simulateTreatment(sample, rule) {
   return rule.replacement || "（请填写处理结果）";
 }
 
-function TestRuleDialog({ rule, onClose }) {
+
+function rulePayloadForTest(rule) {
+  const scope = Array.isArray(rule.scope) ? rule.scope.join("、") : (rule.scope || "正文、表格");
+  return {
+    id: rule.id,
+    type: rule.type,
+    name: rule.name,
+    matchMode: rule.matchMode,
+    pattern: rule.pattern,
+    action: rule.action,
+    replacement: rule.replacement || "",
+    scope,
+    mandatory: Boolean(rule.mandatory),
+    enabled: rule.enabled !== false,
+    positiveExample: rule.positiveExample || "",
+    negativeExample: rule.negativeExample || "",
+  };
+}
+
+function formatEngineTestResult(data, rule, { editor = false } = {}) {
+  if (!data?.hit) {
+    return editor
+      ? { ok: false, text: "未命中，请检查判断方式、条件和样例。" }
+      : { ok: false, text: `未命中“${rule.name}”，当前样例不会应用此规则。` };
+  }
+  const preview = data.replacement === "" ? "（已删除）" : data.replacement;
+  const spanHint = data.matchCount > 1 ? `（${data.matchCount} 处）` : "";
+  return editor
+    ? { ok: true, text: `已命中。试算结果：${preview}` }
+    : { ok: true, text: `已命中“${rule.name}”${spanHint}。处理后：${preview}` };
+}
+
+async function runEngineRuleTest(rule, sample) {
+  const result = await desktopBridge.testRule({
+    sample,
+    rule: rulePayloadForTest(rule),
+  });
+  if (!result?.ok) {
+    const message = result?.error?.message || "试跑失败，请检查规则配置。";
+    const err = new Error(message);
+    err.code = result?.error?.code || "RULE_TEST_FAILED";
+    throw err;
+  }
+  return result.data;
+}
+
+function TestRuleDialog({ rule, onClose, persistRules = false }) {
   const [sample, setSample] = useState(rule.positiveExample || rule.pattern || "");
   const [result, setResult] = useState(null);
+  const [testing, setTesting] = useState(false);
 
-  const run = () => {
+  const run = async () => {
     if (!sample.trim()) {
       setResult({ ok: false, text: "请先输入一段虚构样例。" });
+      return;
+    }
+    if (persistRules) {
+      setTesting(true);
+      try {
+        const data = await runEngineRuleTest(rule, sample);
+        setResult(formatEngineTestResult(data, rule));
+      } catch (error) {
+        setResult({ ok: false, text: error?.message || "试跑失败，请检查规则配置。" });
+      } finally {
+        setTesting(false);
+      }
       return;
     }
     const matched = sampleMatchesRule(sample, rule);
@@ -425,7 +497,9 @@ function TestRuleDialog({ rule, onClose }) {
   return (
     <ModalShell
       title="测试规则"
-      description="测试只发生在当前窗口的虚构样例中，不读取文件，也不会改变当前任务。"
+      description={persistRules
+        ? "试跑由本机规则引擎执行，只使用当前虚构样例，不读取文件，也不会改变当前任务。"
+        : "测试只发生在当前窗口的虚构样例中，不读取文件，也不会改变当前任务。"}
       onClose={onClose}
       footer={<button type="button" className="rule-button primary" onClick={onClose}>完成</button>}
     >
@@ -438,7 +512,9 @@ function TestRuleDialog({ rule, onClose }) {
         <span>虚构测试内容</span>
         <textarea value={sample} onChange={(event) => { setSample(event.target.value); setResult(null); }} rows={4} />
       </label>
-      <button type="button" className="rule-button test-wide" onClick={run}><FlaskConical size={17} aria-hidden="true" />运行测试</button>
+      <button type="button" className="rule-button test-wide" onClick={run} disabled={testing}>
+        <FlaskConical size={17} aria-hidden="true" />{testing ? "试跑中…" : "运行测试"}
+      </button>
       {result && (
         <div className={`test-result ${result.ok ? "success" : "warning"}`} role="status">
           {result.ok ? <Check size={19} aria-hidden="true" /> : <Info size={19} aria-hidden="true" />}
@@ -1102,9 +1178,10 @@ export default function RuleLibraryView({
           returnTarget={returnTarget}
           onClose={() => setEditor(null)}
           onSave={saveRule}
+          persistRules={persistRules}
         />
       )}
-      {testRule && <TestRuleDialog rule={testRule} onClose={() => setTestRule(null)} />}
+      {testRule && <TestRuleDialog rule={testRule} onClose={() => setTestRule(null)} persistRules={persistRules} />}
       {deleteTarget && (
         <ConfirmDialog
           title="删除这条规则？"

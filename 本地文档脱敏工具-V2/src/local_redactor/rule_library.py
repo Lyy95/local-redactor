@@ -74,6 +74,8 @@ OPTIONAL_IMPORT_HEADERS = (
 _THREAD_LOCKS: dict[str, threading.Lock] = {}
 _THREAD_LOCKS_GUARD = threading.Lock()
 
+_ALLOW_UNTESTED_EXAMPLES = False
+
 
 class RuleLibraryError(RuntimeError):
     """Base error for persistent rule-library operations."""
@@ -97,6 +99,20 @@ class RuleStoreError(RuleLibraryError):
 
 class RuleImportError(RuleLibraryError):
     """A CSV/XLSX import is malformed or unsafe."""
+
+
+
+@contextmanager
+def allowing_untested_examples() -> Iterator[None]:
+    """Skip positive/negative example checks while constructing a dry-run rule."""
+
+    global _ALLOW_UNTESTED_EXAMPLES
+    previous = _ALLOW_UNTESTED_EXAMPLES
+    _ALLOW_UNTESTED_EXAMPLES = True
+    try:
+        yield
+    finally:
+        _ALLOW_UNTESTED_EXAMPLES = previous
 
 
 class RuleKind(StrEnum):
@@ -409,7 +425,7 @@ class RuleDefinition:
             raise RuleValidationError(f"正例不能超过 {MAX_EXAMPLE_LENGTH} 个字符")
         if any(len(example) > MAX_EXAMPLE_LENGTH for example in self.negative_examples):
             raise RuleValidationError(f"反例不能超过 {MAX_EXAMPLE_LENGTH} 个字符")
-        if self.match_mode is not MatchMode.MANUAL:
+        if not _ALLOW_UNTESTED_EXAMPLES and self.match_mode is not MatchMode.MANUAL:
             for example in self.positive_examples:
                 if not _raw_spans(self, example):
                     raise RuleValidationError(f"正例未命中规则：{self.name}")
@@ -428,7 +444,7 @@ class RuleDefinition:
                 self.replacement,
             ):
                 raise RuleValidationError("必须替换的代号不能保留完整原词")
-        elif not self.positive_examples:
+        elif not _ALLOW_UNTESTED_EXAMPLES and not self.positive_examples:
             raise RuleValidationError("判断标准至少需要填写一个正确示例（正例）")
 
 
@@ -693,6 +709,58 @@ class RuleSession:
         replacement_text = f"{rule.replacement}{index:0{rule.code_width}d}"
         self._sequence_values[key] = replacement_text
         return replacement_text
+
+
+
+def dry_run_rule(
+    rule: RuleDefinition,
+    text: str,
+    *,
+    applies_to: str = "text",
+) -> dict[str, object]:
+    """Evaluate sample text against one rule without touching the rule store.
+
+    Returns hit/miss, matched spans and the full-text replacement preview.
+    Manual rules are treated as an explicit whole-value selection for the sample.
+    """
+
+    if applies_to not in ALLOWED_SCOPES - {"all"}:
+        raise RuleValidationError("待匹配内容的适用范围无效")
+    with allowing_untested_examples():
+        enabled = replace(rule, enabled=True)
+        session = RuleSession(
+            RuleLibrary(
+                rules=(enabled,),
+                revision=0,
+                preset_version=0,
+            )
+        )
+    manual_ids = (enabled.id,) if enabled.match_mode is MatchMode.MANUAL else ()
+    application = session.apply(
+        text,
+        applies_to=applies_to,
+        manual_rule_ids=manual_ids,
+    )
+    matches = [
+        {
+            "start": match.start,
+            "end": match.end,
+            "original": match.original,
+            "replacement": match.replacement,
+            "ruleId": match.rule_id,
+            "ruleName": match.rule_name,
+            "action": match.action.value,
+            "mandatory": match.mandatory,
+        }
+        for match in application.matches
+    ]
+    return {
+        "hit": bool(matches),
+        "original": application.original,
+        "replacement": application.replacement,
+        "matchCount": len(matches),
+        "matches": matches,
+    }
 
 
 class Protector(Protocol):
@@ -2035,9 +2103,11 @@ __all__ = [
     "RuleStoreError",
     "RuleValidationError",
     "WindowsDpapiProtector",
+    "allowing_untested_examples",
     "default_industry_rules",
     "default_standard_rules",
     "default_rule_store_path",
+    "dry_run_rule",
     "classify_imported_rules",
     "import_rules",
     "is_preset_rule",

@@ -20,6 +20,8 @@ from local_redactor.rule_library import (
     RuleImportError,
     RuleKind,
     RuleLibraryError,
+    allowing_untested_examples,
+    dry_run_rule,
     import_rules,
     preview_import_rules,
     restore_default_rules as apply_restore_default_rules,
@@ -398,6 +400,47 @@ class DesktopBridge(QObject):
             return self._error("RULE_NOT_FOUND", "该规则已不存在。")
         except Exception as exc:
             return self._error("RULE_SAVE_FAILED", self._safe_message(exc, "无法更新规则状态。"), True)
+
+    @Slot(str, result=str)
+    def test_rule(self, payload_json: str) -> str:
+        """Dry-run one rule definition against sample text via the rule engine."""
+
+        try:
+            payload = self._object(payload_json)
+            sample = str(payload.get("sample") or payload.get("text") or "")
+            if not sample.strip():
+                return self._error("RULE_TEST_EMPTY", "请先输入一段虚构样例。")
+            rule_payload = payload.get("rule")
+            if isinstance(rule_payload, dict):
+                rule_data = rule_payload
+            else:
+                rule_data = {
+                    key: value
+                    for key, value in payload.items()
+                    if key not in {"sample", "text", "appliesTo", "rule"}
+                }
+            with allowing_untested_examples():
+                rule = _rule_from_ui(rule_data)
+                applies_raw = str(payload.get("appliesTo") or "").strip()
+                if applies_raw in _SCOPE_FROM_UI:
+                    applies_to = _SCOPE_FROM_UI[applies_raw]
+                elif applies_raw in {"text", "cell", "ocr", "metadata", "hidden"}:
+                    applies_to = applies_raw
+                else:
+                    applies_to = next(
+                        (scope for scope in rule.applies_to if scope != "all"),
+                        "text",
+                    )
+                if applies_to == "hidden":
+                    applies_to = "metadata" if "metadata" in rule.applies_to else "text"
+                result = dry_run_rule(rule, sample, applies_to=applies_to)
+            return self._ok(result)
+        except RuleLibraryError as exc:
+            return self._error("RULE_INVALID", str(exc), True)
+        except Exception as exc:
+            return self._error(
+                "RULE_TEST_FAILED", self._safe_message(exc, "无法试跑规则。"), True
+            )
 
     @Slot(result=str)
     def choose_rule_import_file(self) -> str:

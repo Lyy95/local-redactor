@@ -292,3 +292,89 @@ def test_bridge_restores_missing_default_presets(tmp_path: Path) -> None:
     untouched = next(rule for rule in second["data"]["rules"] if rule["id"] == edited_rule["id"])
     assert untouched["replacement"] == "USER_EDITED_PRESET"
     assert any(rule["id"] == "rule-custom-org" and rule["replacement"] == "机构自定" for rule in second["data"]["rules"])
+
+def test_bridge_dry_runs_rule_against_sample_text(tmp_path: Path) -> None:
+    store = RuleStore(
+        tmp_path / "rules.dat",
+        protector=FernetFileProtector(tmp_path / "key"),
+        include_presets=False,
+    )
+
+    def factory():
+        return LocalDesktopController(rule_store=store)
+
+    bridge = DesktopBridge(tmp_path, controller_factory=factory)
+    payload = {
+        "sample": "联系人来自公安厅，电话 13812345678。",
+        "rule": {
+            "id": "rule-ga-dry",
+            "type": "fixed",
+            "name": "公安简称统一代号",
+            "matchMode": "包含",
+            "pattern": "公安",
+            "action": "换成固定代号",
+            "replacement": "GA",
+            "scope": "正文、表格",
+            "mandatory": True,
+            "enabled": True,
+        },
+    }
+    hit = json.loads(bridge.test_rule(json.dumps(payload, ensure_ascii=False)))
+    assert hit["ok"] is True, hit
+    assert hit["data"]["hit"] is True
+    assert hit["data"]["matchCount"] == 1
+    assert hit["data"]["matches"][0]["original"] == "公安"
+    assert hit["data"]["matches"][0]["replacement"] == "GA"
+    assert "GA" in hit["data"]["replacement"]
+    assert "公安" not in hit["data"]["replacement"]
+
+    miss = json.loads(
+        bridge.test_rule(
+            json.dumps(
+                {
+                    **payload,
+                    "sample": "本文仅讨论普通业务协作。",
+                },
+                ensure_ascii=False,
+            )
+        )
+    )
+    assert miss["ok"] is True, miss
+    assert miss["data"]["hit"] is False
+    assert miss["data"]["matchCount"] == 0
+    assert miss["data"]["replacement"] == "本文仅讨论普通业务协作。"
+
+    empty = json.loads(bridge.test_rule(json.dumps({"sample": "   ", "rule": payload["rule"]})))
+    assert empty["ok"] is False
+    assert empty["error"]["code"] == "RULE_TEST_EMPTY"
+
+    mask = json.loads(
+        bridge.test_rule(
+            json.dumps(
+                {
+                    "sample": "手机号 13812345678 已登记",
+                    "rule": {
+                        "id": "rule-phone-dry",
+                        "type": "standard",
+                        "name": "手机号掩码试跑",
+                        "matchMode": "符合格式",
+                        "pattern": r"1[3-9]\d{9}",
+                        "action": "保留首尾并加星号",
+                        "replacement": "",
+                        "scope": "正文",
+                        "mandatory": False,
+                        "enabled": True,
+                        "positiveExample": "",
+                    },
+                },
+                ensure_ascii=False,
+            )
+        )
+    )
+    assert mask["ok"] is True, mask
+    assert mask["data"]["hit"] is True
+    assert mask["data"]["matches"][0]["original"] == "13812345678"
+    assert mask["data"]["matches"][0]["replacement"].startswith("1")
+    assert "*" in mask["data"]["matches"][0]["replacement"]
+    assert mask["data"]["matches"][0]["replacement"].endswith("8")
+
