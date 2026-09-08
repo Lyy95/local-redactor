@@ -624,6 +624,7 @@ export default function RuleLibraryView({
   builtinExplanations = [],
   focusRuleId = "",
   returnContext = null,
+  hasActiveTask = false,
   onReturnToReview,
   onIncrementalApply,
   persistRules = false,
@@ -651,6 +652,12 @@ export default function RuleLibraryView({
   const [feedback, setFeedback] = useState(null);
   const rowRefs = useRef(new Map());
   const returnTarget = formatReturnTarget(returnContext);
+  const shouldIncrementalApply = Boolean(hasActiveTask || returnContext);
+
+  const runIncrementalApply = async (rule = null) => {
+    if (!shouldIncrementalApply) return null;
+    return onIncrementalApply?.(rule, returnContext);
+  };
 
   const focusedRule = useMemo(
     () => rules.find((rule) => rule.id === focusRuleId) || builtinExplanations.find((item) => item.id === focusRuleId) || null,
@@ -760,9 +767,11 @@ export default function RuleLibraryView({
       }
       setEditor(null);
       notify(exists ? `“${savedRule.name}”已更新并写入本机。` : `“${savedRule.name}”已新增并写入本机。`);
+      if (shouldIncrementalApply) {
+        await runIncrementalApply(savedRule);
+      }
       if (!returnAfterSave) return;
-      await onIncrementalApply?.(savedRule, returnContext);
-      notify(`规则已保存并增量应用，正在返回${returnTarget}。`);
+      notify(`正在返回${returnTarget}。`);
       onReturnToReview?.(returnContext, savedRule);
     } catch (error) {
       notify(error?.message || "规则未能保存。", "error");
@@ -778,6 +787,9 @@ export default function RuleLibraryView({
         commitRules(rules.map((item) => item.id === rule.id ? { ...item, enabled, updatedAt: "刚刚" } : item));
       }
       notify(`“${rule.name}”已${enabled ? "启用" : "停用"}。`);
+      if (shouldIncrementalApply) {
+        await runIncrementalApply({ ...rule, enabled });
+      }
     } catch (error) {
       notify(error?.message || "无法更新规则状态。", "error");
     }
@@ -793,6 +805,9 @@ export default function RuleLibraryView({
       }
       notify(`“${deleteTarget.name}”已从本机规则库删除。`);
       setDeleteTarget(null);
+      if (shouldIncrementalApply) {
+        await runIncrementalApply(deleteTarget);
+      }
     } catch (error) {
       notify(error?.message || "无法删除规则。", "error");
     }
@@ -805,11 +820,17 @@ export default function RuleLibraryView({
         applyRemote(result, "无法恢复默认预置。");
         const count = result.data?.restoredCount ?? 0;
         notify(count ? `已恢复 ${count} 条缺失的默认预置。` : "默认预置均已存在，没有覆盖你的规则。");
+        if (shouldIncrementalApply && count) {
+          await runIncrementalApply(null);
+        }
       } else {
         const ids = new Set(rules.map((rule) => rule.id));
         const missing = RESTORE_RULES.filter((rule) => !ids.has(rule.id));
         commitRules([...missing, ...rules]);
         notify(missing.length ? `已恢复 ${missing.length} 条缺失的默认预置。` : "默认预置均已存在，没有覆盖你的规则。");
+        if (shouldIncrementalApply && missing.length) {
+          await runIncrementalApply(null);
+        }
       }
       setRestoreOpen(false);
     } catch (error) {
@@ -894,7 +915,10 @@ export default function RuleLibraryView({
         const kept = result.data?.keptExistingCount ?? 0;
         const replaced = result.data?.replacedExistingCount ?? 0;
         const skipped = result.data?.skippedDuplicateCount ?? 0;
-        notify(`导入完成：新增 ${added} 条，跳过重复 ${skipped} 条，${policy === "keep" ? `保留现有 ${kept} 条` : `采用导入 ${replaced} 条`}。下次扫描将使用更新后的规则。`);
+        notify(`导入完成：新增 ${added} 条，跳过重复 ${skipped} 条，${policy === "keep" ? `保留现有 ${kept} 条` : `采用导入 ${replaced} 条`}。`);
+        if (shouldIncrementalApply && (added > 0 || replaced > 0)) {
+          await runIncrementalApply(null);
+        }
       } catch (error) {
         notify(error?.message || "无法完成规则导入。", "error");
       } finally {
@@ -936,7 +960,7 @@ export default function RuleLibraryView({
       return;
     }
     try {
-      await onIncrementalApply?.(focusedRule, returnContext);
+      await runIncrementalApply(focusedRule);
       notify(`系统识别说明为只读，已返回${returnTarget}。`);
       onReturnToReview?.(returnContext, focusedRule);
     } catch (error) {

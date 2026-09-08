@@ -963,14 +963,14 @@ export function App() {
 
   const updateFindingRule = (updatedRule) => {
     if (!updatedRule?.id) return;
-    const affectedIds = findings.filter((item) => item.rule.id === updatedRule.id).map((item) => item.id);
+    const affectedIds = findings.filter((item) => item.rule?.id === updatedRule.id).map((item) => item.id);
     if (updatedRule.replacement) {
       setReplacements((values) => ({
         ...values,
         ...Object.fromEntries(affectedIds.map((id) => [id, updatedRule.replacement])),
       }));
     }
-    setFindings((items) => items.map((item) => item.rule.id === updatedRule.id ? {
+    setFindings((items) => items.map((item) => item.rule?.id === updatedRule.id ? {
       ...item,
       suggestion: updatedRule.replacement || item.suggestion,
       rule: {
@@ -984,19 +984,51 @@ export function App() {
     } : item));
   };
 
+  const applyRulesIncrementallyToTask = async (updatedRule = null) => {
+    if (desktopTaskId && desktopReady && !demoMode) {
+      const result = await desktopBridge.applyRulesIncrementally(desktopTaskId);
+      if (!result?.ok) {
+        const message = result?.error?.message || "无法增量应用到当前任务。";
+        showToast(message, "error");
+        throw new Error(message);
+      }
+      if (result.data?.skipped) {
+        if (updatedRule) updateFindingRule(updatedRule);
+        showToast(result.data?.message || "当前任务尚未完成检查，新规则将在下次扫描时生效。", "info");
+        return result.data;
+      }
+      applyDesktopSnapshot(result.data);
+      const added = Number(result.data?.addedCount || 0);
+      showToast(
+        result.data?.message
+          || (added > 0 ? `规则已增量应用，新增 ${added} 个候选项` : "规则已增量应用到当前任务"),
+      );
+      return result.data;
+    }
+    if (updatedRule) updateFindingRule(updatedRule);
+    if (updatedRule || findings.length) {
+      showToast("新规则已增量应用到当前任务");
+    }
+    return { applied: false, skipped: true, addedCount: 0 };
+  };
+
   const returnFromRule = (context, updatedRule) => {
-    updateFindingRule(updatedRule);
+    // Engine refresh already happened in applyRulesIncrementallyToTask when desktop task is active.
+    if (!desktopTaskId) updateFindingRule(updatedRule);
     const target = context || returnContext;
     setActiveNav("tasks");
     setActiveTaskId("current");
     setHistoryView("current");
     setExpanded(true);
     setWorkflowStep(3);
-    setTaskState(pendingCount === 0 ? "ready_to_generate" : "review_required");
+    setTaskState((current) => {
+      if (current === "ready_to_generate" || current === "review_required") return current;
+      return pendingCount === 0 ? "ready_to_generate" : "review_required";
+    });
     if (target?.findingId) setSelectedFindingId(target.findingId);
     setFocusRuleId(null);
     setReturnContext(null);
-    showToast("规则已保存并增量应用，已返回原确认位置");
+    showToast("已返回原确认位置");
   };
 
   const rememberDecision = (finding, action, value) => {
@@ -1412,8 +1444,9 @@ export function App() {
             showTabs={!expanded}
             focusRuleId={focusRuleId}
             returnContext={returnContext}
+            hasActiveTask={Boolean(desktopTaskId)}
             onReturnToReview={returnFromRule}
-            onIncrementalApply={(updatedRule) => { updateFindingRule(updatedRule); showToast("新规则已增量应用到当前任务"); }}
+            onIncrementalApply={applyRulesIncrementallyToTask}
             persistRules={!demoMode && desktopReady}
             onToast={showToast}
           />

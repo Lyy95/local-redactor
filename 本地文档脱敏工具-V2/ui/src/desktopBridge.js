@@ -71,4 +71,5 @@ export const desktopBridge = {
   previewRuleImport: (importId) => invoke("preview_rule_import", importId),
   commitRuleImport: (importId, conflictPolicy) => invoke("commit_rule_import", importId, conflictPolicy),
   restoreDefaultRules: () => invoke("restore_default_rules"),
+  applyRulesIncrementally: (taskId) => invoke("apply_rules_incrementally", taskId),
 };

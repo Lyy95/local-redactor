@@ -16,7 +16,7 @@ from local_redactor.models import (
     ProcessingMode,
     TransformMethod,
 )
-from local_redactor.rule_library import RuleLibrary
+from local_redactor.rule_library import FernetFileProtector, RuleLibrary, RuleStore
 from local_redactor.service import LocalDesktopController
 from local_redactor_v2.bridge import DesktopBridge
 
@@ -219,3 +219,96 @@ def test_encrypted_history_store_survives_a_new_process_store_instance(tmp_path:
     assert len(entries) == 1
     assert entries[0].id == "completed-1"
     assert entries[0].source_name == "虚构项目方案.docx"
+
+
+def test_bridge_applies_rules_incrementally_to_active_task(tmp_path: Path) -> None:
+    """Saving a fixed rule mid-review refreshes findings without a full re-scan."""
+
+    source = tmp_path / "增量规则复核.docx"
+    document = Document()
+    document.add_paragraph("项目代号：青云项目")
+    document.add_paragraph("联系电话：13800138000")
+    document.save(source)
+
+    store = RuleStore(
+        tmp_path / "rules.dat",
+        protector=FernetFileProtector(tmp_path / "key"),
+        include_presets=False,
+    )
+    history = _HistoryStore()
+
+    def controller_factory():
+        return LocalDesktopController(
+            detector=_Detector(),
+            image_analyzer_factory=lambda: SimpleNamespace(
+                analyze=lambda _document: SimpleNamespace(findings=[], warnings=[])
+            ),
+            rule_store=store,
+            history_store=history,
+        )
+
+    bridge = DesktopBridge(
+        tmp_path,
+        controller_factory=controller_factory,
+        file_selector=lambda: source,
+        folder_selector=lambda: tmp_path / "输出",
+    )
+
+    # No active task -> soft error path for the UI.
+    missing = json.loads(bridge.apply_rules_incrementally("missing-task"))
+    assert missing["ok"] is False
+    assert missing["error"]["code"] == "TASK_NOT_FOUND"
+
+    chosen = _payload(bridge.choose_file())
+    created = _payload(bridge.create_task(json.dumps({"source": chosen["source"]})))
+    task_id = created["taskId"]
+
+    skipped = _payload(bridge.apply_rules_incrementally(task_id))
+    assert skipped["skipped"] is True
+    assert skipped["applied"] is False
+    assert skipped["addedCount"] == 0
+
+    scanned = _payload(bridge.start_scan(task_id))
+    assert scanned["state"] == "review_required"
+    before_ids = {item["id"] for item in scanned["findings"]}
+    assert not any(item["original"] == "青云项目" for item in scanned["findings"])
+
+    saved = _payload(
+        bridge.save_rule(
+            json.dumps(
+                {
+                    "id": "rule-qingyun",
+                    "type": "fixed",
+                    "name": "青云项目固定替换",
+                    "matchMode": "包含",
+                    "pattern": "青云项目",
+                    "action": "换成固定代号",
+                    "replacement": "项目A",
+                    "scope": "正文、表格",
+                    "mandatory": True,
+                    "enabled": True,
+                },
+                ensure_ascii=False,
+            )
+        )
+    )
+    assert any(rule["id"] == "rule-qingyun" for rule in saved["rules"])
+
+    applied = _payload(bridge.apply_rules_incrementally(task_id))
+    assert applied["applied"] is True
+    assert applied["skipped"] is False
+    assert applied["addedCount"] >= 1
+    assert any(item["original"] == "青云项目" for item in applied["findings"])
+    qingyun = next(item for item in applied["findings"] if item["original"] == "青云项目")
+    assert "项目A" in qingyun["suggestion"]
+    assert qingyun["rule"]["id"] == "rule-qingyun"
+    # Prior detector findings remain addressable after remapping.
+    assert before_ids.intersection({item["id"] for item in applied["findings"]}) or any(
+        item["original"] == "13800138000" for item in applied["findings"]
+    )
+
+    disabled = _payload(bridge.set_rule_enabled("rule-qingyun", False))
+    assert disabled["rules"][0]["enabled"] is False
+    after_disable = _payload(bridge.apply_rules_incrementally(task_id))
+    assert after_disable["applied"] is True
+    assert not any(item["original"] == "青云项目" for item in after_disable["findings"])

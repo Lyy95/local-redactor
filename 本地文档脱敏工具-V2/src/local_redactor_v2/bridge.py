@@ -550,6 +550,67 @@ class DesktopBridge(QObject):
             )
 
     @Slot(str, result=str)
+    def apply_rules_incrementally(self, task_id: str) -> str:
+        """Re-apply the latest rule-library snapshot to an in-progress task.
+
+        Uses the controller's cached document / OCR findings (no full re-scan).
+        If the task has not been scanned yet, returns a soft skip so callers can
+        keep the library mutation and wait for the next scan.
+        """
+
+        task = self._tasks.get(task_id)
+        if task is None:
+            return self._error("TASK_NOT_FOUND", "当前任务不存在。", True, "new_task")
+        if task.bundle is None:
+            snapshot = self._snapshot(task)
+            snapshot.update(
+                {
+                    "applied": False,
+                    "skipped": True,
+                    "addedCount": 0,
+                    "message": "当前任务尚未完成检查，新规则将在下次扫描时生效。",
+                }
+            )
+            return self._ok(snapshot)
+        try:
+            added_count = int(task.controller.apply_rules_incrementally())
+            snapshot = self._snapshot(task)
+            snapshot.update(
+                {
+                    "applied": True,
+                    "skipped": False,
+                    "addedCount": added_count,
+                    "message": (
+                        f"已增量应用规则，新增 {added_count} 个候选项。"
+                        if added_count
+                        else "已按最新规则刷新当前复核结果。"
+                    ),
+                }
+            )
+            return self._ok(snapshot)
+        except RuntimeError as exc:
+            snapshot = self._snapshot(task)
+            snapshot.update(
+                {
+                    "applied": False,
+                    "skipped": True,
+                    "addedCount": 0,
+                    "message": self._safe_message(
+                        exc, "当前没有正在复核的文档，新规则将在下次扫描时生效。"
+                    ),
+                }
+            )
+            return self._ok(snapshot)
+        except ValueError as exc:
+            return self._error("RULE_APPLY_FAILED", str(exc), True)
+        except Exception as exc:
+            return self._error(
+                "RULE_APPLY_FAILED",
+                self._safe_message(exc, "无法增量应用规则到当前任务。"),
+                True,
+            )
+
+    @Slot(str, result=str)
     def open_history(self, entry_id: str) -> str:
         result = json.loads(self.list_history())
         if not result.get("ok"):
