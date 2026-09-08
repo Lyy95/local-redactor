@@ -210,3 +210,85 @@ def test_bridge_preview_and_commit_rule_import(tmp_path: Path) -> None:
     org = next(rule for rule in replaced["data"]["rules"] if rule["pattern"] == "星河合作机构")
     assert org["replacement"] == "机构乙"
     assert org["id"] == "rule-org"
+
+
+def test_bridge_restores_missing_default_presets(tmp_path: Path) -> None:
+    store = RuleStore(
+        tmp_path / "rules.dat",
+        protector=FernetFileProtector(tmp_path / "key"),
+        include_presets=False,
+    )
+
+    def factory():
+        return LocalDesktopController(rule_store=store)
+
+    bridge = DesktopBridge(tmp_path, controller_factory=factory)
+
+    custom = json.loads(
+        bridge.save_rule(
+            json.dumps(
+                {
+                    "id": "rule-custom-org",
+                    "type": "fixed",
+                    "name": "我的机构代号",
+                    "matchMode": "包含",
+                    "pattern": "星河自定义机构",
+                    "action": "换成固定代号",
+                    "replacement": "机构自定",
+                    "scope": "正文、表格",
+                    "mandatory": False,
+                    "enabled": True,
+                },
+                ensure_ascii=False,
+            )
+        )
+    )
+    assert custom["ok"] is True, custom
+    assert len(custom["data"]["rules"]) == 1
+
+    first = json.loads(bridge.restore_default_rules())
+    assert first["ok"] is True, first
+    assert first["data"]["restoredCount"] > 0
+    rules = first["data"]["rules"]
+    assert any(rule["id"] == "rule-custom-org" for rule in rules)
+    presets = [rule for rule in rules if rule.get("preset")]
+    assert len(presets) == first["data"]["restoredCount"]
+    assert all(rule["id"].startswith("preset-") for rule in presets)
+
+    noop = json.loads(bridge.restore_default_rules())
+    assert noop["ok"] is True, noop
+    assert noop["data"]["restoredCount"] == 0
+    assert len(noop["data"]["rules"]) == len(rules)
+
+    target = next(rule for rule in presets if rule["id"].startswith("preset-v1-police-"))
+    deleted = json.loads(bridge.delete_rule(target["id"]))
+    assert deleted["ok"] is True, deleted
+    assert not any(rule["id"] == target["id"] for rule in deleted["data"]["rules"])
+
+    edited = json.loads(
+        bridge.save_rule(
+            json.dumps(
+                {
+                    **target,
+                    "id": next(
+                        rule["id"]
+                        for rule in deleted["data"]["rules"]
+                        if rule.get("preset") and rule["id"] != target["id"]
+                    ),
+                    "replacement": "USER_EDITED_PRESET",
+                    "name": "用户改过的预置",
+                },
+                ensure_ascii=False,
+            )
+        )
+    )
+    assert edited["ok"] is True, edited
+    edited_rule = next(rule for rule in edited["data"]["rules"] if rule["replacement"] == "USER_EDITED_PRESET")
+
+    second = json.loads(bridge.restore_default_rules())
+    assert second["ok"] is True, second
+    assert second["data"]["restoredCount"] == 1
+    assert any(rule["id"] == target["id"] for rule in second["data"]["rules"])
+    untouched = next(rule for rule in second["data"]["rules"] if rule["id"] == edited_rule["id"])
+    assert untouched["replacement"] == "USER_EDITED_PRESET"
+    assert any(rule["id"] == "rule-custom-org" and rule["replacement"] == "机构自定" for rule in second["data"]["rules"])

@@ -22,6 +22,7 @@ from local_redactor.rule_library import (
     RuleLibraryError,
     import_rules,
     preview_import_rules,
+    restore_default_rules as apply_restore_default_rules,
 )
 from local_redactor.service import LocalDesktopController
 from local_redactor.ui.controller import ReviewBundle
@@ -363,6 +364,28 @@ class DesktopBridge(QObject):
             return self._error("RULE_NOT_FOUND", "该规则已不存在。")
         except Exception as exc:
             return self._error("RULE_DELETE_FAILED", self._safe_message(exc, "无法删除规则。"), True)
+
+    @Slot(result=str)
+    def restore_default_rules(self) -> str:
+        try:
+            store = self._rule_controller().rule_store
+            library = store.load()
+            before_ids = {rule.id for rule in library.rules}
+            restored = apply_restore_default_rules(library)
+            added_count = sum(1 for rule in restored.rules if rule.id not in before_ids)
+            if restored.revision != library.revision:
+                store.save(restored)
+            return self._ok(
+                {
+                    "revision": restored.revision,
+                    "rules": [_rule_dto(item) for item in restored.rules],
+                    "restoredCount": added_count,
+                }
+            )
+        except Exception as exc:
+            return self._error(
+                "RULE_RESTORE_FAILED", self._safe_message(exc, "无法恢复默认预置。"), True
+            )
 
     @Slot(str, bool, result=str)
     def set_rule_enabled(self, rule_id: str, enabled: bool) -> str:

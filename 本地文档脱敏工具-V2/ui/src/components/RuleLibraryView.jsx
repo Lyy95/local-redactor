@@ -798,12 +798,23 @@ export default function RuleLibraryView({
     }
   };
 
-  const restoreDefaults = () => {
-    const ids = new Set(rules.map((rule) => rule.id));
-    const missing = RESTORE_RULES.filter((rule) => !ids.has(rule.id));
-    commitRules([...missing, ...rules]);
-    notify(missing.length ? `已恢复 ${missing.length} 条缺失的默认预置。` : "默认预置均已存在，没有覆盖我的规则。");
-    setRestoreOpen(false);
+  const restoreDefaults = async () => {
+    try {
+      if (persistRules) {
+        const result = await desktopBridge.restoreDefaultRules();
+        applyRemote(result, "无法恢复默认预置。");
+        const count = result.data?.restoredCount ?? 0;
+        notify(count ? `已恢复 ${count} 条缺失的默认预置。` : "默认预置均已存在，没有覆盖你的规则。");
+      } else {
+        const ids = new Set(rules.map((rule) => rule.id));
+        const missing = RESTORE_RULES.filter((rule) => !ids.has(rule.id));
+        commitRules([...missing, ...rules]);
+        notify(missing.length ? `已恢复 ${missing.length} 条缺失的默认预置。` : "默认预置均已存在，没有覆盖你的规则。");
+      }
+      setRestoreOpen(false);
+    } catch (error) {
+      notify(error?.message || "无法恢复默认预置。", "error");
+    }
   };
 
   const buildPrototypePreview = () => {
@@ -1083,7 +1094,7 @@ export default function RuleLibraryView({
       {restoreOpen && (
         <ConfirmDialog
           title="恢复默认预置？"
-          body="只恢复缺失的虚构默认预置，不覆盖你已新增或修改的规则。"
+          body="只恢复缺失的默认预置，不覆盖你已新增或修改的规则。"
           confirmLabel="恢复缺失预置"
           onCancel={() => setRestoreOpen(false)}
           onConfirm={restoreDefaults}
